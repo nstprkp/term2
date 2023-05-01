@@ -1,0 +1,9 @@
+D:/laba4akinator/cmake-build-debug/CMakeFiles/laba4akinator.dir
+D:/laba4akinator/cmake-build-debug/CMakeFiles/edit_cache.dir
+D:/laba4akinator/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+D:/laba4akinator/cmake-build-debug/lib/CMakeFiles/myLib.dir
+D:/laba4akinator/cmake-build-debug/lib/CMakeFiles/edit_cache.dir
+D:/laba4akinator/cmake-build-debug/lib/CMakeFiles/rebuild_cache.dir
+D:/laba4akinator/cmake-build-debug/data/CMakeFiles/myData.dir
+D:/laba4akinator/cmake-build-debug/data/CMakeFiles/edit_cache.dir
+D:/laba4akinator/cmake-build-debug/data/CMakeFiles/rebuild_cache.dir
