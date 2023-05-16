@@ -1,4 +1,4 @@
-#include "lib/Header.h"
+#include "Header.h"
 
 int main(void)
 {
