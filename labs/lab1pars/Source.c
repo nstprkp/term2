@@ -47,7 +47,7 @@ void add_person(struct people* person, int n, int t, FILE* ptr)
     }
 
     if (line[0] == 32) {
-        for (int i = 0; i < strlen(line) - 1; i++) {
+        for (int i = 0; i < strlen(line) - 2; i++) {
             line[i] = line[i + 1];
         }
         int k = strlen(line);
