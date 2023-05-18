@@ -106,7 +106,6 @@ BMPFile* load_BMPFile(char* fname)
         exit(-1);
     }
 
-    //output_information(bmp_file);
     out_BMPPixels(bmp_file);
 
     fclose(fp);
