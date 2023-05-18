@@ -214,7 +214,7 @@ char* find_IP_add(char* ip_ent)
     while (!feof(fp)) {
         fscanf(fp, "%255s", buff);
         if (count == 0) {
-            kk = (char*)malloc(strlen(buff)*sizeof(char));
+            kk = (char*)malloc((strlen(buff)+2)*sizeof(char));
             strcpy(kk, buff);
         }
         if (count == 3) {
@@ -298,7 +298,7 @@ void find_in_file (HashTable* table, char* domen, char* dop_domen)
     while (!feof(f) && check == 0) {
         fscanf(f, "%255s", buff);
         if (count == 0) {
-            kk = (char*)malloc(strlen(buff)*sizeof(char));
+            kk = (char*)malloc((strlen(buff)+2)*sizeof(char));
             strcpy(kk, buff);
         }
         if (count == 2) {
@@ -384,6 +384,7 @@ void domain_by_IP(void)
         }
     }
     printf("\n");
+    fclose(fp);
     if(count == 0)
     {
         printf("Try again!\n");
