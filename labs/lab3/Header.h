@@ -4,30 +4,24 @@
 #include <math.h>
 
 #pragma pack(1)
-/*typedef struct BMPHeader {
-    unsigned char ID[2]; //magic identifier
-    unsigned int file_size; //size of file
-    unsigned char unused[4]; //unused char
-    unsigned int pixel_offset; //offset where the pixel array
-} BMPHeader;*/
 
 typedef struct DIBHeader {
-    unsigned short ID; //magic identifier
-    unsigned int file_size; //size of file
-    unsigned short unused1; //unused char
+    unsigned short ID;
+    unsigned int file_size;
+    unsigned short unused1;
     unsigned short unused2;
-    unsigned int pixel_offset; //offset where the pixel array
-    unsigned int header_size; //number of bytes in the DIBHeader (from this point)
-    unsigned int width; //width in pixel
-    unsigned int height; //height in pixel
-    unsigned short color_planes; //number of color plane
-    unsigned short bits_per_pixel; //number of bits per pixel
-    unsigned int BI_RGB; //compression
-    unsigned int data_size; //size of pixel in not compression
-    unsigned int pwidth; //print resolution
-    unsigned int pheight; //printf resolution
-    unsigned int colors_count; //number of colors in palette
-    unsigned int imp_colors_count; //number of important colors
+    unsigned int pixel_offset;
+    unsigned int header_size;
+    unsigned int width;
+    unsigned int height;
+    unsigned short color_planes;
+    unsigned short bits_per_pixel;
+    unsigned int BI_RGB;
+    unsigned int data_size;
+    unsigned int pwidth;
+    unsigned int pheight;
+    unsigned int colors_count;
+    unsigned int imp_colors_count;
 } DIBHeader;
 
 typedef struct BMPFile {
