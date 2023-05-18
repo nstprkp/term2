@@ -23,7 +23,7 @@ int input_check_del(int n)
 int check_type(char ch, char str[], FILE* ptr)
 {
     int i = 0, count = 0;
-    while (ch == str[i] && i < strlen(str)) {
+    while (ch == str[i] && i < (int)strlen(str)) {
         ch = fgetc(ptr);
         count++;
         i++;
