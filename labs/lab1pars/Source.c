@@ -1,4 +1,4 @@
-#include "header.h"
+#include "Header.h"
 
 int input_check_opt()
 {
