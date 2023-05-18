@@ -364,7 +364,7 @@ void domain_by_IP(void)
 {
     char needIP[16];
     printf("IP: ");
-    scanf("%s", needIP);
+    scanf("%s", &needIP);
     FILE* fp = fopen("input.txt", "r");
     printf("\n");
     int count = 0;
