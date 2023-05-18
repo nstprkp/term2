@@ -1,7 +1,11 @@
 cmake_minimum_required(VERSION 3.23)
-project(app)
-#project(new)
+project(labs)
 
-#add_executable(app labs/lab3/main.c labs/lab3/Source.c)
-#add_executable(app labs/laba4akinator/main.c labs/laba4akinator/Header.h labs/laba4akinator/Source.c labs/laba4akinator/treeAPI.h labs/laba4akinator/treeAPI.c)
-add_executable(app labs/check/main.c)
+file(GLOB LABS LIST_DIRECTORIES true "labs/*")
+
+foreach(LAB ${LABS})
+  if(IS_DIRECTORY ${LAB})
+    file(GLOB_RECURSE SOURCES "${LAB}/*.c")
+    add_executable(${LAB} ${SOURCES})
+  endif()
+endforeach()
