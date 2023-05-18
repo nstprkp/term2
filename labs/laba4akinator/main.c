@@ -1,5 +1,5 @@
-#include "lib/treeAPI.h"
-#include "data/Header.h"
+#include "treeAPI.h"
+#include "Header.h"
 
 int main() {
     FILE* f;
