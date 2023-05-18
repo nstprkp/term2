@@ -26,7 +26,6 @@ typedef struct DIBHeader {
 
 typedef struct BMPFile {
     DIBHeader bhdr;
-    //DIBHeader dhdr;
     unsigned char* data;
 } BMPFile;
 #pragma pop
