@@ -34,8 +34,10 @@ int check_type(char ch, char str[], FILE* ptr)
 
 void add_person(struct people* person, int n, int t, FILE* ptr)
 {
-    char* line = (char*)calloc(1, sizeof(char*));
-    for (int i = 0;;i++)
+    char* line = NULL;  // Initialize line pointer to NULL
+    int lineSize = 0;   // Track the current size of line buffer
+
+    for (int i = 0;; i++)
     {
         line = (char*)realloc(line, (i + 1) * sizeof(char));
         line[i] = fgetc(ptr);
@@ -51,43 +53,41 @@ void add_person(struct people* person, int n, int t, FILE* ptr)
             line[i] = line[i + 1];
         }
         int k = strlen(line);
-        line[k] = '\0'; k--; line[k] = '\0';
+        line[k] = '\0';
+        k--;
+        line[k] = '\0';
     }
+
     if (t == 1) {
-        //printf("%d", n);
         person[n].name = (char*)calloc(strlen(line) + 1, sizeof(char));
         strcpy(person[n].name, line);
-        //printf("%s\n", person[n].name);
     }
     if (t == 2) {
         person[n].age = (char*)calloc(strlen(line) + 1, sizeof(char));
         strcpy(person[n].age, line);
-        //printf("%s\n", person[n].age);
     }
     if (t == 3) {
         person[n].residence = (char*)calloc(strlen(line) + 1, sizeof(char));
         strcpy(person[n].residence, line);
-        //printf("%s\n", person[n].residence);
     }
     if (t == 4) {
-        //person[n].money = (char*)calloc(strlen(line) + 1, sizeof(char));
-        //strcpy(person[n].money, line);
-
         for (int j = 0; j < strlen(line) - 1; j++) {
             line[j] = line[j + 1];
         }
-        for (int j = strlen(line); j > strlen(line)-5; j--) {
+        for (int j = strlen(line); j > strlen(line) - 5; j--) {
             line[j] = '\0';
         }
 
-        int a = line[0]-'0', b = line[1]-'0', c=line[2]-'0';
-        if (c >= 0 && c<= 9) {
+        int a = line[0] - '0', b = line[1] - '0', c = line[2] - '0';
+        if (c >= 0 && c <= 9) {
             person[n].money = a * 100 + b * 10 + c;
         }
         else { person[n].money = a * 10 + b; }
-        //printf("%s\n", person[n].money);
     }
+
+    free(line);  // Free the dynamically allocated memory
 }
+
 
 void made(struct people* person, int n, char c, int t, char const_find[], FILE*ptr)
 {
