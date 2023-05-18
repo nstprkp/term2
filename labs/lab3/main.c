@@ -6,7 +6,6 @@ int main(void)
     char *fname_in = (char*)calloc(n, sizeof(char));
     printf("Enter name of file to work with:\n");
     get_str(fname_in, n+1);
-    //BMPFile* bmpf = loadBMPFile(fname_in);
     menu();
     int t=10;
     while (t!=0) {
