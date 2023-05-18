@@ -24,14 +24,14 @@ void push(struct stack* st, char* val, int n, int t)
 
 void pop(struct stack* st) {
     if (st[0].pointer == 0) {
-        exit 0;
+        exit;
     }
     st[0].pointer--;
 }
 
 char* top(struct stack* st) {
     if (st[0].pointer == 0) {
-        exit 0;
+        exit;
     }
     return st[0].value[st[0].pointer];
 }
