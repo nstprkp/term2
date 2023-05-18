@@ -9,7 +9,6 @@ char* get_str(char *s, int k)
     return s;
 }
 
-// Hash function for strings
 unsigned int hash(char* key, int num_buckets) {
     unsigned int hash = 0;
     for (int i = 0; key[i] != '\0'; i++) {
@@ -25,7 +24,6 @@ int input_check(char* str)
     int sum;
     int i = 0;
     for (int j = 0; j < strlen(str); j++) {
-        //strcpy(c, str[i]);
         if (str[j] == 46) {point++;}
     }
     if (point != 3) {
@@ -60,7 +58,6 @@ int input_check(char* str)
     return g;
 }
 
-// Create a new hash table with the given initial capacity and number of buckets
 HashTable* create_hash_table() {
     HashTable* table = (HashTable*) malloc(sizeof(HashTable));
     table->size = 0;
@@ -253,7 +250,6 @@ void add_in_file(HashTable* table, FILE* f, char* domen, char* IP)
             get_str(ip_ent, n+1);
             while (input_check(ip_ent) != 0) {
                 printf("Try again!\n");
-              //  get_str(ip_ent, n+1);
                 get_str(ip_ent, n+1);
             }
             char* t; //= (char*)malloc(256 * sizeof (char));
@@ -328,9 +324,9 @@ void find_in_file (HashTable* table, char* domen, char* dop_domen)
         else {
             count++;
         }
-      /*  for (int tt = 0; tt < 256; tt++) {
+        for (int tt = 0; tt < 256; tt++) {
               buff[tt] = 0;
-        }*/
+        }
     }
     fclose(f);
     if (ch == 1) {
@@ -348,7 +344,6 @@ int find_IP(HashTable* table, char* domen)
     else {
         find_in_file(table, domen, domen);
         char *val = get(table, domen);
-        //1printf("dooop\n");
         if (val != NULL ) {
             printf("IP of this site: %s\n", val);
             return 0;
@@ -392,12 +387,11 @@ void domain_by_IP(void)
     }
 }
 
-void display_hash_table(HashTable* hashtable)
+void display_hash_table(struct HashTable* hashtable)
 {
     for (int i = 0; i < hashtable->num_buckets; i++) {
         printf("Bucket %d:\t", i);
         ListNode* current = hashtable->buckets[i];
-      //  printf("")
         while (current != NULL) {
             printf("%s - %s\t", current->key, current->value);
             current = current->next;
