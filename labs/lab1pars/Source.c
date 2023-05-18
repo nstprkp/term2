@@ -37,6 +37,7 @@ void add_person(struct people* person, int n, int t, FILE* ptr)
     char* line = NULL;  // Initialize line pointer to NULL
     int lineSize = 0;   // Track the current size of line buffer
 
+    line = (char*)malloc(1000*sizeof(char));
     for (int i = 0;; i++)
     {
         line = (char*)realloc(line, (i + 1) * sizeof(char));
