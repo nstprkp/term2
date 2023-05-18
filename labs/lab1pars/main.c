@@ -4,18 +4,22 @@ int main(void)
 {
 	menu();
 	FILE* ptr;
-	int n = 0, nom = 0;
+	int n = 0;
 	struct people* person;
 	person = (struct people*)calloc(1000, sizeof(struct people));
-	char ch;
+	int ch;
 	if ((ptr = fopen("input.txt", "r")) != NULL) {
 		while (!feof(ptr)) {
 			ch = fgetc(ptr);
 			if (ch == 'm') { find_inf(person, ch, &n, ptr); }
+			n++;
 		}
 		fclose(ptr);
 	}
-	else { printf("\nFile not found.\n"); }
+	else { printf("\nFile not found.\n"); 
+	      fclose(ptr);
+	      return 0;
+	     }
 
 	person = (struct people*)realloc(person, n * sizeof(struct people));
 
