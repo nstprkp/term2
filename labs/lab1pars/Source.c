@@ -176,7 +176,7 @@ int comp_full(const void* typ1, const void* typ2)
     const struct people* p2 = (const struct people*)typ2;
 
     int cmp;
-    if (cmp == strcmp(p1->name, p2->name)) return cmp;
+    if (cmp = strcmp(p1->name, p2->name)) return cmp;
     return strcmp(p1->age, p2->age);
 }
 
