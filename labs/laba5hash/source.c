@@ -2,7 +2,8 @@
 
 char* get_str(char *s, int k)
 {
-    int c, i=0;
+    char c;
+    int i=0;
     while(--k > 0 && (c = getchar())!=EOF && c != '\n')
         s[i++] = c;
     s[i] = '\0';
@@ -200,15 +201,14 @@ char* get(HashTable* table, char* key)
 
 char* find_IP_add(char* ip_ent)
 {
-    int ch = 0;
     FILE* fp;
     fp = fopen("input.txt", "r");
-    int n = SIZE;
+    int n = 3;
     int count = 0;
     char buff[n];
     char* kk;
     char* vv;
-    while (!feof(fp)) {
+    while (!feof(fp) && fp!=NULL) {
         fscanf(fp, "%255s", buff);
         if (count == 0) {
             kk = (char*)malloc((strlen(buff)+2)*sizeof(char));
@@ -252,7 +252,7 @@ void add_in_file(HashTable* table, FILE* f, char* domen, char* IP)
                 printf("Try again!\n");
                 get_str(ip_ent, n+1);
             }
-            char* t; //= (char*)malloc(256 * sizeof (char));
+            char* t;
             t = find_IP_add(ip_ent);
             if (t == NULL) {
                 fprintf(f, "\n%s\tIN\tA\t%s", domen, ip_ent);
@@ -291,7 +291,7 @@ void find_in_file (HashTable* table, char* domen, char* dop_domen)
     char* vv;
     int check = 0;
     int ch = 0;
-    while (!feof(f) && check == 0) {
+    while (!feof(f) && check == 0 && f!=NULL) {
         fscanf(f, "%255s", buff);
         if (count == 0) {
             kk = (char*)malloc((strlen(buff)+2)*sizeof(char));
@@ -363,7 +363,7 @@ void domain_by_IP(void)
     FILE* fp = fopen("input.txt", "r");
     printf("\n");
     int count = 0;
-    int n = SIZE;
+    int n = 3;
     char line[n];
     char domain[n];
     char ip[16];
@@ -379,7 +379,7 @@ void domain_by_IP(void)
         }
     }
     printf("\n");
-    fclose(fp);
+    if (fp!=NULL) {fclose(fp);}
     if(count == 0)
     {
         printf("Try again!\n");
