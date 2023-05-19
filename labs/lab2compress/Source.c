@@ -94,22 +94,25 @@ void free_memory(struct stack* st1, struct stack* st2, int n)
 
 void print_in_file(FILE* fp, char* val1, char* val2, char* add, char c)
 {
-    if (strcmp(val2, add) != 0 && add != NULL) {
-        int z = 0;
-        while (add[z] != val2[0]) {
-            fprintf(fp, "%c", add[z]);
-            z++;
+    if (add != NULL) {
+        if (strcmp(val2, add) != 0) {
+            int z = 0;
+            while (add[z] != val2[0]) {
+                fprintf(fp, "%c", add[z]);
+                z++;
+            }
+            fprintf(fp, "%s", val1);
+            z = z + strlen(val2);
+            while (add[z] != '\n' && add[z] != '\0') {
+                fprintf(fp, "%c", add[z]);
+                z++;
+            }
         }
-        fprintf(fp, "%s", val1);
-        z = z + strlen(val2);
-        while (add[z] != '\n' && add[z] != '\0') {
-            fprintf(fp, "%c", add[z]);
-            z++;
+        else {
+            fprintf(fp, "%s", val1);
         }
     }
-    else {
-        fprintf(fp, "%s", val1);
-    }
+    
 
     if (c == '\n') { fprintf(fp, "%c", c); }
     else {
