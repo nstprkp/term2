@@ -175,7 +175,6 @@ int main()
     }
     else {
         return 0;
-        fclose(f);
     }
     fprintf(fp, "\n/\n");
     for (int i = 0; i < ind; i++) {
