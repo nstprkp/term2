@@ -26,7 +26,7 @@ int main() {
                     return 0;
                 }
                 printf("choose what you want to find:\n");
-                int n = SIZE;
+                int n = 3;
                 char *domen = (char*)calloc(n, sizeof(char));
                 get_str(domen, n+1);
                 get_str(domen, n+1);
@@ -38,7 +38,6 @@ int main() {
                     f = fopen("input.txt", "a");
                     if (f == NULL) {
                         printf("File not found!\n");
-                        fclose(f);
                         return 0;
                     }
                     add_in_file(table, f, domen, NULL);
@@ -50,7 +49,6 @@ int main() {
                 break;
             case 3:
                 display_cache(table);
-               // display_hash_table(table);
                 break;
 
         }
