@@ -55,7 +55,9 @@ void final_step(FILE* f, FILE* fp, struct imp* temp, int ind)
             istr = (char*)calloc(256, sizeof(char));
             char* saveptr = NULL;
             istr = strtok(buff, sep);
-
+            
+            istr = (char*)realloc(istr, (strlen(buff)+1)*sizeof(char));
+            
             int i = 0;
             int z = 0;
             if (temp != NULL && istr != NULL) {
