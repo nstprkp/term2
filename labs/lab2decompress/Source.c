@@ -52,11 +52,12 @@ void final_step(FILE* f, FILE* fp, struct imp* temp, int ind)
 
             char sep[16] = "[](),*.;:!?\" ";
             char* istr;
-            istr = calloc(256, sizeof(char));
+            istr = (char*)calloc(256, sizeof(char));
             char* saveptr = NULL;
             istr = strtok(buff, sep);
 
-            int i = 0, z = 0;
+            int i = 0;
+            int z = 0;
             if (temp != NULL && istr != NULL) {
                 while (i < ind && z == 0) {
                     if (strcmp(temp[i].val1, istr) == 0) {
