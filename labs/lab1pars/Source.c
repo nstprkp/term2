@@ -34,8 +34,7 @@ int check_type(char ch, char str[], FILE* ptr)
 
 void add_person(struct people* person, int n, int t, FILE* ptr)
 {
-    char* line = NULL;  // Initialize line pointer to NULL
-    int lineSize = 0;   // Track the current size of line buffer
+    char* line = NULL;
 
     line = (char*)malloc(1000*sizeof(char));
     for (int i = 0;; i++)
@@ -53,7 +52,7 @@ void add_person(struct people* person, int n, int t, FILE* ptr)
         for (int i = 0; i < strlen(line) - 2; i++) {
             line[i] = line[i + 1];
         }
-        int k = strlen(line);
+        unsigned long long k = strlen(line);
         line[k] = '\0';
         k--;
         line[k] = '\0';
@@ -86,7 +85,7 @@ void add_person(struct people* person, int n, int t, FILE* ptr)
         else { person[n].money = a * 10 + b; }
     }
 
-    free(line);  // Free the dynamically allocated memory
+    free(line);
 }
 
 
@@ -135,8 +134,6 @@ void find_inf(struct people* person, char ch, int* n, FILE* ptr)
             c = 'N'; t++;
             made(person, k, c, t, money_find, ptr);
             (*n)++;
-            //person = (struct people*)realloc(person, k * sizeof(struct people));
-
         }
     }
 }
@@ -179,7 +176,7 @@ int comp_full(const void* typ1, const void* typ2)
     const struct people* p2 = (const struct people*)typ2;
 
     int cmp;
-    if (cmp = strcmp(p1->name, p2->name)) return cmp;
+    if (cmp == strcmp(p1->name, p2->name)) return cmp;
     return strcmp(p1->age, p2->age);
 }
 
@@ -234,9 +231,12 @@ void work_prog(struct people* person, int n)
                 qsort(person, n, sizeof(struct people), comp_full);
                 break;
             case 7:
-                delite_elem(person, n);
-                n--;
-                person = (struct people*)realloc(person, n * sizeof(struct people));
+                if (n!=0) {
+                    delite_elem(person, n);
+                    n--;
+                    person = (struct people*)realloc(person, n * sizeof(struct people));
+                }
+
                 break;
         }
     }
