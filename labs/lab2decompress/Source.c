@@ -2,21 +2,24 @@
 
 void print_in_file(FILE* fp, char* val1, char* val2, char* add, char c)
 {
-    if (strcmp(val2, add) != 0) {
-        int z = 0;
-        while (add[z] != val2[0]) {
-            fprintf(fp, "%c", add[z]);
-            z++;
+    if (add!=NULL) {
+        
+        if (strcmp(val2, add) != 0) {
+            int z = 0;
+            while (add[z] != val2[0]) {
+                fprintf(fp, "%c", add[z]);
+                z++;
+            }
+            fprintf(fp, "%s", val1);
+            z = z + strlen(val2);
+            while (add[z] != '\n' && add[z] != '\0') {
+                fprintf(fp, "%c", add[z]);
+                z++;
+            }
         }
-        fprintf(fp, "%s", val1);
-        z = z + strlen(val2);
-        while (add[z] != '\n' && add[z] != '\0') {
-            fprintf(fp, "%c", add[z]);
-            z++;
+        else {
+            fprintf(fp, "%s", val1);
         }
-    }
-    else {
-        fprintf(fp, "%s", val1);
     }
 }
 
@@ -43,7 +46,7 @@ void final_step(FILE* f, FILE* fp, struct imp* temp, int ind)
             if (add != NULL) {
                 add = strcpy(add, buff);
             }
-            //int leng = strlen(add);
+            
             c = ' ';
             c = fgetc(f);
 
@@ -71,6 +74,8 @@ void final_step(FILE* f, FILE* fp, struct imp* temp, int ind)
                     fprintf(fp, "%s", add);
                 }
             }
+            free(add);
+            free(istr);
         }
     }
 }
