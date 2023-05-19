@@ -54,6 +54,7 @@ int main()
     }
     else {
         printf("File not found!\n");
+        free(temp);
         return 0;
     }
     fclose(stream);
