@@ -145,6 +145,7 @@ void full_cash(HashTable* table)
         ListNode *evict_node = table->tail;
 
         table->tail = evict_node->prev;
+        free(table->tail->next);
         table->tail->next = NULL;
         int evict_index = hash(evict_node->key, table->num_buckets);
         if (table->buckets[evict_index] == evict_node) {
@@ -226,9 +227,9 @@ char* find_IP_add(char* ip_ent)
         else {
             count++;
         }
-        for (int tt = 0; tt < 256; tt++) {
+      /*  for (int tt = 0; tt < 256; tt++) {
             buff[tt] = 0;
-        }
+        }*/
     }
     fclose(fp);
     return NULL;
