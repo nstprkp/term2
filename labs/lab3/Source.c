@@ -19,14 +19,15 @@ void menu_for_gamma_and_median()
 
 char* get_str(char *s, int k)
 {
-    int c, i=0;
+    char c;
+    int i=0;
     while(--k > 0 && (c = getchar())!=EOF && c != '\n')
         s[i++] = c;
     s[i] = '\0';
     return s;
 }
 
-void output_information(BMPFile* bmp_file)
+void output_information(struct BMPFile* bmp_file)
 {
     printf("ID=%x\n",bmp_file->bhdr.ID);
     printf("file_size=%d\n", bmp_file->bhdr.file_size);
@@ -46,7 +47,7 @@ void output_information(BMPFile* bmp_file)
     printf("imp_colors_count=%d\n", bmp_file->bhdr.imp_colors_count);
 }
 
-void out_BMPPixels(BMPFile*  bmp_file)
+void out_BMPPixels(struct BMPFile*  bmp_file)
 {
     for (int i=0; i<bmp_file->bhdr.data_size; i++) {
         if (i % 16 == 0) {
@@ -56,7 +57,7 @@ void out_BMPPixels(BMPFile*  bmp_file)
     }
 }
 
-int check_header(BMPFile* bmp_file)
+int check_header(struct BMPFile* bmp_file)
 {
     return bmp_file->bhdr.ID == 0x4D42
         && bmp_file->bhdr.bits_per_pixel == 24
@@ -70,11 +71,10 @@ BMPFile* load_BMPFile(char* fname)
     FILE* fp = fopen(fname, "rb");
     if (!fp) {
         printf("Can't load file!\n");
-        fclose(fp);
         exit(0);
     }
     BMPFile* bmp_file = (BMPFile*)malloc(sizeof(BMPFile));
-    int check;
+    unsigned long long check;
     check = fread(&bmp_file->bhdr, sizeof(DIBHeader), 1, fp);
 
     if (check!=1){
@@ -115,7 +115,7 @@ BMPFile* load_BMPFile(char* fname)
 void saveBMP(const BMPFile* bmp_file, char* fname)
 {
     FILE* fp = fopen(fname, "wb");
-    rewind(fp);
+    if (fp!=NULL) {rewind(fp);}
     fwrite(&bmp_file->bhdr, sizeof (DIBHeader), 1, fp);
     fseek(fp, bmp_file->bhdr.pixel_offset, SEEK_SET);
     fwrite(bmp_file->data, bmp_file->bhdr.data_size, 1, fp);
@@ -132,7 +132,7 @@ static int get_position(const DIBHeader * header, int x, int y) {
     return i + j;
 }
 
-RGB_pix get_pixel(BMPFile * bmp, int x, int y) {
+RGB_pix get_pixel(struct BMPFile * bmp, int x, int y) {
     if (x < 0 || x >= abs(bmp->bhdr.width)) {
         printf("Error. X should be [%d, %d), but %d\n", 0, abs(bmp->bhdr.width), x);
         RGB_pix rgb;
@@ -177,7 +177,7 @@ void set_BW(BMPFile* bmp) {
     for (int y = 0; y < abs(bmp->bhdr.height); y++) {
         for (int x = 0; x < abs(bmp->bhdr.width); x++) {
             RGB_pix pixel = get_pixel(bmp, x, y);
-            int rgb = (int) ( (pixel.r + pixel.g + pixel.b) / 3);
+            unsigned char rgb = (int) ( (pixel.r + pixel.g + pixel.b) / 3);
             pixel.r = rgb;
             pixel.g = rgb;
             pixel.b = rgb;
