@@ -16,7 +16,6 @@ int main()
         int t = 0;
         while (!feof(stream) && t==0) {
             fscanf(stream, "%255s", buff);
-            // printf("%s\n", buff);
             if (strcmp(buff, st) == 0) {
                 t = 1;
             }
