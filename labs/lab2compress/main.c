@@ -27,8 +27,7 @@ int main()
 
             char sep[16] = ",.;*:!?()[]\" ";
             char* istr;
-            istr = calloc(256, sizeof(char));
-            char* saveptr = NULL;
+            istr = (char*)calloc(256, sizeof(char));
             istr = strtok(buff, sep);
 
             if (st1 != NULL) {
@@ -132,7 +131,8 @@ int main()
     temp = (struct imp*)malloc(1 * sizeof(struct imp));
 
     int ind = 0;
-    int s = 0, l = kol - 1;
+    int s = 0;
+    int l = kol - 1;
     if (word != NULL) {
         while (s != l) {
             if (word[l].len > word[s].len && word[l].num > word[s].num && word[l].met == 0 && word[s].met == 0) {
