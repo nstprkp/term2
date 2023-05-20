@@ -240,4 +240,5 @@ void work_prog(struct people* person, int n)
                 break;
         }
     }
+    free(person);
 }
