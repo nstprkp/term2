@@ -44,7 +44,6 @@ void out_BMPPixels(BMPFile*  bmp_file);
 int check_header(BMPFile* bmp_file);
 BMPFile* load_BMPFile(char* fname);
 void saveBMP(const BMPFile* bmp_file, char* fname);
-static int get_position(const DIBHeader * header, int x, int y);
 RGB_pix get_pixel(BMPFile * bmp, int x, int y);
 void set_pixel(BMPFile * bmp, int x, int y, RGB_pix rgb);
 void set_BW(BMPFile* bmp);
