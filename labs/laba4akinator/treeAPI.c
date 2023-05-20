@@ -72,6 +72,7 @@ char* get_elem(tree_node *head, int check)
         i++;
     }
     i--;
+    char str[256] = "asdfghjkl";
     while (tmp && check != 1) {
         if (mas[i] != 0) {
             if (i>0) {
@@ -94,6 +95,7 @@ char* get_elem(tree_node *head, int check)
             }
         }
     }
+    return str;
 }
 
 
@@ -134,6 +136,7 @@ int get_ans(tree_node *head, int check)
             }
         }
     }
+    return ans;
 }
 
 void new_insert(tree_node** head, char* value, int check)
@@ -160,7 +163,9 @@ void new_insert(tree_node** head, char* value, int check)
                 i--;
                 continue;
             } else {
-                tmp->right->data = NULL;
+                if (tmp->right->data!=NULL) {
+                    tmp->right->data = NULL;
+                }
                 tmp->right->data = (char*)malloc(strlen(value) + 1);
                 strcpy(tmp->right->data, value);
                 return;
@@ -172,7 +177,9 @@ void new_insert(tree_node** head, char* value, int check)
                 i--;
                 continue;
             } else {
-                tmp->left->data = NULL;
+                if (tmp->left->data != NULL) {
+                    tmp->left->data = NULL;
+                }
                 tmp->left->data = (char*) malloc(strlen(value) + 1);
                 strcpy(tmp->left->data, value);
                 return;
@@ -193,7 +200,7 @@ void free_tree(tree_node *tree)
 {
     if (tree != NULL) {
         free_tree(tree->left);
-        free(tree);
         free_tree(tree->right);
+        free(tree);
     }
 }
