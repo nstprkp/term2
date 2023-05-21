@@ -11,7 +11,6 @@ int main() {
 
     tree_node* tree = NULL;
     int check = 1;
-    int k = 1;
     while (!feof(f)) {
         char str[256];
         fgets( str, 256, f);
@@ -42,7 +41,6 @@ int main() {
         ans = get_ans(tree, check);
         if (ans==1) {
             char* str_new = (char*)malloc(sizeof(char));
-            //char c = quest[j];
             while (quest[j] != '!') {
                 str_new[j] = quest[j];
                 str_new = (char*) realloc(str_new, (strlen(str_new)+1)*sizeof(char));
@@ -54,7 +52,6 @@ int main() {
         else { printf("%s", quest); }
     }
 
-    //  print_tree(tree, "tree", 0);
     int t;
     printf("Is it true?\nChoose: 1 - yes, 0 - no: ");
     scanf("%d", &t);
@@ -65,8 +62,6 @@ int main() {
         quest = (char *) malloc(256 * sizeof(char));
         quest = get_elem(tree, check);
         char* str_new = (char*) calloc(1, sizeof(char));
-        //char c = quest[j];
-        int k=j;
         int i=0;
         while (quest[j] != '!') {
             str_new[i] = quest[j];
@@ -107,15 +102,13 @@ int main() {
         getStr(str_question, 256 + 1);
         str_question = strcat(str_question, "\n");
         str_name = strcat(str_name, "!It's first time!\n");
-
-        //printf("%s", strok);
+        
         char *val1;
         val1 = (char *) malloc(256 * sizeof(char));
         val1 = get_elem(tree, check);
         new_insert(&tree, str_question, check);
         new_insert(&tree, str_name, check * 2);
         new_insert(&tree, val1, (check * 2) + 1);
-        //printf("%s", val1);
     }
 
     printf("Thank you for game!\n");
@@ -141,6 +134,5 @@ int main() {
 
     fclose(fp);
     free_tree(tree);
-   // free(tree);
     return 0;
 }
