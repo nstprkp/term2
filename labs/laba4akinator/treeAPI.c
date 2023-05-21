@@ -95,7 +95,7 @@ char* get_elem(tree_node *head, int check)
             }
         }
     }
-    return str;
+    return head->data;
 }
 
 
