@@ -177,34 +177,35 @@ void full_cash(HashTable* table)
 char* get(HashTable* table, const char* key)
 {
     int index = hash(key, table->num_buckets);
-    ListNode *node = table->buckets[index];
-    while (node != NULL) {
-        if (strcmp(node->key, key) == 0) {
-            if (node != table->head) {
+    ListNode* node = table->buckets[index];
+    ListNode* dop_tail = NULL;
 
-                ListNode *dop_tail = table->buckets[index];
-                if (dop_tail == table->tail) {
-                    while (dop_tail->prev->next != NULL) {
-                        dop_tail->prev = dop_tail->prev->next;
-                    }
-                    table->tail = dop_tail->prev;
-                }
-
-                if (node->prev != NULL) {
-                    node->prev->next = node->next;
-                }
-                if (node->next != NULL) {
-                    node->next->prev = node->prev;
-                }
-                node->prev = NULL;
-                node->next = table->head;
-                table->head->prev = node;
-                table->head = node;
-                table->buckets[index] = node;
+    while (node != NULL && strcmp(node->key, key) != 0) {
+        if (dop_tail == NULL && node == table->tail) {
+            dop_tail = table->buckets[index];
+            while (dop_tail->prev->next != NULL) {
+                dop_tail->prev = dop_tail->prev->next;
             }
-            return node->value;
+            table->tail = dop_tail->prev;
         }
         node = node->next;
+    }
+
+    if (node != NULL) {
+        if (node != table->head) {
+            if (node->prev != NULL) {
+                node->prev->next = node->next;
+            }
+            if (node->next != NULL) {
+                node->next->prev = node->prev;
+            }
+            node->prev = NULL;
+            node->next = table->head;
+            table->head->prev = node;
+            table->head = node;
+            table->buckets[index] = node;
+        }
+        return node->value;
     }
 
     return NULL;
@@ -293,28 +294,34 @@ void add_in_file(HashTable* table, FILE* f, char* domen, char* IP)
     }
 }
 
-void find_in_file (HashTable* table, char* domen, char* dop_domen)
+void find_in_file(HashTable* table, const char* domen, const char* dop_domen)
 {
-    FILE* f;
-    f = fopen("input.txt", "r");
+    FILE* f = fopen("input.txt", "r");
+    if (f == NULL) {
+        return;
+    }
+
     char buff[256];
+    char* kk = NULL;
+    char* vv = NULL;
     int count = 0;
-    char* kk;
-    char* vv;
     int check = 0;
     int ch = 0;
-    while (f!=NULL && !feof(f) && check == 0) {
+
+    while (!feof(f) && check == 0) {
         fscanf(f, "%255s", buff);
+
         if (count == 0) {
-            kk = (char*)malloc((strlen(buff)+2)*sizeof(char));
+            kk = (char*)malloc((strlen(buff) + 1) * sizeof(char));
             strcpy(kk, buff);
         }
-        if (count == 2 && strcmp(buff, "CNAME") == 0) {
+        else if (count == 2 && strcmp(buff, "CNAME") == 0) {
             ch = 1;
         }
-        if (count == 3) {
-            vv = (char*)malloc(strlen(buff)*sizeof(char));
+        else if (count == 3) {
+            vv = (char*)malloc((strlen(buff) + 1) * sizeof(char));
             strcpy(vv, buff);
+
             if (strcmp(kk, domen) == 0 && ch == 0) {
                 if (move_to_head_in_cash(table, dop_domen, vv) == 0) {
                     putt(table, dop_domen, vv);
@@ -322,23 +329,26 @@ void find_in_file (HashTable* table, char* domen, char* dop_domen)
                 }
                 check = 1;
             }
-            if (strcmp(kk, domen) == 0 && ch == 1) {
+            else if (strcmp(kk, domen) == 0 && ch == 1) {
                 ch = 2;
                 check = 1;
             }
+
             if (ch != 0) {
                 ch--;
             }
-            count=0;
+
+            count = 0;
         }
         else {
             count++;
         }
-        for (int tt = 0; tt < 256; tt++) {
-              buff[tt] = 0;
-        }
+
+        memset(buff, 0, sizeof(buff));
     }
-    if (f!=NULL) {fclose(f);}
+
+    fclose(f);
+
     if (ch == 1) {
         find_in_file(table, vv, domen);
     }
