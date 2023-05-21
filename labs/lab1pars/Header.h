@@ -11,7 +11,7 @@ struct people {
 
 int input_check_opt();
 int input_check_del(int n);
-int check_type(char ch, char str[], FILE* ptr);
+int check_type(char ch, const char* str, FILE* ptr);
 void add_person(struct people* person, int n, int t, FILE* ptr);
 void made(struct people* person, int n, char c, int t, char const_find[], FILE* ptr);
 void find_inf(struct people* person, char ch, int* n, FILE* ptr);
