@@ -7,7 +7,7 @@ int main(void)
 	int n = 0;
 	struct people* person;
 	person = (struct people*)calloc(1000, sizeof(struct people));
-	int ch;
+	char ch;
 	if ((ptr = fopen("input.txt", "r")) != NULL) {
 		while (!feof(ptr)) {
 			ch = fgetc(ptr);
@@ -16,10 +16,10 @@ int main(void)
 		}
 		fclose(ptr);
 	}
-	else { printf("\nFile not found.\n"); 
-	      fclose(ptr);
-	      return 0;
-	     }
+	else { 
+		printf("\nFile not found.\n"); 
+	      	return 0;
+	}
 
 	person = (struct people*)realloc(person, n * sizeof(struct people));
 
