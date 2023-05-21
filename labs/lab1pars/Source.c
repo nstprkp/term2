@@ -20,12 +20,14 @@ int input_check_del(int n)
     return val;
 }
 
-int check_type(char ch, char* str, FILE* ptr)
+int check_type(char ch, const char* str, FILE* ptr)
 {
     int i = 0;
     int count = 0;
+    int chr;
     while (ch == str[i] && i < (int)strlen(str)) {
-        ch = fgetc(ptr);
+        chr = fgetc(ptr);
+        ch=(char)chr;
         count++;
         i++;
     }
@@ -41,7 +43,9 @@ void add_person(struct people* person, int n, int t, FILE* ptr)
     for (int i = 0;; i++)
     {
         line = (char*)realloc(line, (i + 1) * sizeof(char));
-        line[i] = fgetc(ptr);
+        int chr;
+        chr = fgetc(ptr);
+        line[i] = (char)chr;
         if (line[i] == '<')
         {
             line[i] = '\0';
@@ -76,7 +80,7 @@ void add_person(struct people* person, int n, int t, FILE* ptr)
         for (j = 0; j < strlen(line) - 1; j++) {
             line[j] = line[j + 1];
         }
-        for (j = strlen(line); j > strlen(line) - 5; j--) {
+        for (j = (int)strlen(line); j > strlen(line) - 5; j--) {
             line[j] = '\0';
         }
 
@@ -96,19 +100,27 @@ void add_person(struct people* person, int n, int t, FILE* ptr)
 void made(struct people* person, int n, char c, int t, char const_find[], FILE*ptr)
 {
     char ch;
-    ch = fgetc(ptr);
+    int chr;
+    chr = fgetc(ptr);
+    ch=(char)chr;
     while (!feof(ptr) && ch != c) {
-        ch = fgetc(ptr);
+        int chr1;
+        chr1 = fgetc(ptr);
+        ch=(char)chr1;
     }
 
     while (check_type(ch, const_find, ptr) != 1) {
         while (!feof(ptr) && ch != c) {
-            ch = fgetc(ptr);
+            int chr1;
+            chr1 = fgetc(ptr);
+            ch=(char)chr1;
         }
     }
 
     while (!feof(ptr) && ch != '>') {
-        ch = fgetc(ptr);
+        int chr1;
+        chr1 = fgetc(ptr);
+        ch=(char)chr1;
     }
     add_person(person, n, t, ptr);
 }
