@@ -72,7 +72,7 @@ void add_person(struct people* person, int n, int t, FILE* ptr)
         strcpy(person[n].residence, line);
     }
     if (t == 4) {
-        unsigned long long j;
+        int j;
         for (j = 0; j < strlen(line) - 1; j++) {
             line[j] = line[j + 1];
         }
@@ -179,8 +179,7 @@ int comp_full(const void* typ1, const void* typ2)
     const struct people* p1 = (const struct people*)typ1;
     const struct people* p2 = (const struct people*)typ2;
 
-    int cmp;
-    if (cmp == strcmp(p1->name, p2->name)) return cmp;
+    if (strcmp(p1->name, p2->name) != 0) return strcmp(p1->name, p2->name);
     return strcmp(p1->age, p2->age);
 }
 
@@ -244,7 +243,8 @@ void work_prog(struct people* person, int n)
                 }
                 break;
             default:
-                return 0;
+                t=0;
+                break;
               
         }
     }
