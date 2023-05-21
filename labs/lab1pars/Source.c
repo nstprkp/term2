@@ -108,7 +108,7 @@ void add_person(struct people* person, int n, int t, FILE* ptr)
 }
 
 
-void made(struct people* person, int n, char c, int t, char const_find[], FILE*ptr)
+void made(struct people* person, int n, char c, int t, const char* const_find, FILE*ptr)
 {
     int chr;
     char ch;
