@@ -28,23 +28,27 @@ void final_step(FILE* f, FILE* fp, struct imp* temp, int ind)
     int t = 0;
     char buff[256];
     char c = ' ';
+    
     while (!feof(f) && t == 0) {
-        char st[6] = "/";
+        char st[2] = "/";
         fscanf(f, "%255s", buff);
-        if (strcmp(buff, st) == 0) { t = 1; }
+        
+        if (strcmp(buff, st) == 0) {
+            t = 1;
+        }
+        
         if (t == 0) {
-            if (c != NULL) {
-                if (c == '\n') { fprintf(fp, "%c%c", c, c); }
-                else {
-                    if (c == ' ') {
-                        fprintf(fp, "%c", c);
-                    }
+            if (c != '\0') {
+                if (c == '\n') {
+                    fprintf(fp, "%c%c", c, c);
+                } else if (c == ' ') {
+                    fprintf(fp, "%c", c);
                 }
             }
-            char* add;
-            add = calloc(256, sizeof(char));
+            
+            char* add = calloc(256, sizeof(char));
             if (add != NULL) {
-                add = strcpy(add, buff);
+                strcpy(add, buff);
             }
             
             c = ' ';
@@ -52,35 +56,33 @@ void final_step(FILE* f, FILE* fp, struct imp* temp, int ind)
             ch = fgetc(f);
             c = (char)ch;
             
-            char sep[16] = "[](),*.;:!?\" ";
-            char* istr;
-            istr = (char*)calloc(256, sizeof(char));
+            char sep[16] = "[](),*.;:!?\"";
+            char* istr = NULL;
             if (buff != NULL) {
-                istr = (char*)realloc(istr, (strlen(buff)+1)*sizeof(char));
                 istr = strtok(buff, sep);
-                free(istr);
             }
+            
             int i = 0;
             int z = 0;
+            
             if (temp != NULL && istr != NULL) {
                 while (i < ind && z == 0) {
                     if (strcmp(temp[i].val1, istr) == 0) {
-
                         print_in_file(fp, temp[i].val2, temp[i].val1, add);
                         z++;
-                    }
-                    if (strcmp(istr, temp[i].val2) == 0) {
+                    } else if (strcmp(istr, temp[i].val2) == 0) {
                         print_in_file(fp, temp[i].val1, temp[i].val2, add);
                         z++;
                     }
                     i++;
                 }
+                
                 if (z == 0) {
                     fprintf(fp, "%s", add);
                 }
             }
+            
             free(add);
-            free(istr);
         }
     }
 }
