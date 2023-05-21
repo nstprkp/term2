@@ -29,7 +29,7 @@ void pop(struct stack* st) {
     st[0].pointer--;
 }
 
-char* top(struct stack* st) {
+char* top(const struct stack* st) {
     if (st[0].pointer == 0) {
         exit(1);
     }
