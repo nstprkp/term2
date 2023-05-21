@@ -39,9 +39,9 @@ typedef struct RGB_pix {
 void menu();
 void menu_for_gamma_and_median();
 char* get_str(char *s, int k);
-void output_information(BMPFile* bmp_file);
-void out_BMPPixels(BMPFile*  bmp_file);
-int check_header(BMPFile* bmp_file);
+void output_information(const struct BMPFile* bmp_file);
+void out_BMPPixels(const struct BMPFile*  bmp_file);
+int check_header(const struct BMPFile* bmp_file);
 BMPFile* load_BMPFile(char* fname);
 void saveBMP(const BMPFile* bmp_file, char* fname);
 RGB_pix get_pixel(BMPFile * bmp, int x, int y);
