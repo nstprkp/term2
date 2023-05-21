@@ -3,9 +3,12 @@
 char* get_str(char *s, int k)
 {
     char c;
+    int ch;
     int i=0;
-    while(--k > 0 && (c = getchar())!=EOF && c != '\n')
+    while(--k > 0 && (ch = getchar())!=EOF && ch != 13) {
+        c = (char)ch;
         s[i++] = c;
+    }
     s[i] = '\0';
     return s;
 }
