@@ -148,8 +148,8 @@ void full_cash(HashTable* table)
         ListNode *evict_node = table->tail;
 
         table->tail = evict_node->prev;
-        free(table->tail->next);
         table->tail->next = NULL;
+        free(table->tail->next);
         int evict_index = hash(evict_node->key, table->num_buckets);
         if (table->buckets[evict_index] == evict_node) {
             table->buckets[evict_index] = evict_node->next;
@@ -263,11 +263,12 @@ void add_in_file(HashTable* table, FILE* f, char* domen, char* IP)
                 fprintf(f, "\n%s\tIN\tCNAME\t%s", domen, t);
             }
             if (move_to_head_in_cash(table, domen, ip_ent) == 0) {
-                free(t);
                 putt(table, domen, ip_ent);
                 full_cash(table);
             }
             printf("Super we did it!\n");
+            free(ip_ent);
+            free(t);
         }
         if (domen == NULL) {
             printf("Domain:\n");
