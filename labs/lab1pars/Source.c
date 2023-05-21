@@ -243,7 +243,8 @@ void work_prog(struct people* person, int n)
                 }
                 break;
             default:
-                return 0;
+                t=0;
+                break;
               
         }
     }
