@@ -232,6 +232,50 @@ void menu()
     printf("0. Exit\n");
 }
 
+void process_option(struct people* person, int n, int t)
+{
+    switch (t) {
+        case 0:
+            printf("\nThank you! Buy!\n");
+            break;
+        case 1:
+            output(person, n);
+            break;
+        case 2:
+            qsort(person, n, sizeof(struct people), comp_by_name);
+            break;
+        case 3:
+            qsort(person, n, sizeof(struct people), comp_by_money);
+            break;
+        case 4:
+            qsort(person, n, sizeof(struct people), comp_by_residence);
+            break;
+        case 5:
+            qsort(person, n, sizeof(struct people), comp_by_age);
+            break;
+        case 6:
+            qsort(person, n, sizeof(struct people), comp_full);
+            break;
+        case 7:
+            delete_element(person, &n);
+            break;
+        default:
+            t = 0;
+            break;
+    }
+}
+
+void delete_element(struct people* person, int* n)
+{
+    if (*n != 0) {
+        delite_elem(person, *n);
+        (*n)--;
+        if (*n != 0) {
+            person = (struct people*)realloc(person, *n * sizeof(struct people));
+        }
+    }
+}
+
 void work_prog(struct people* person, int n)
 {
     int t = 10;
@@ -239,42 +283,8 @@ void work_prog(struct people* person, int n)
         fflush(stdin);
         printf("\nChoose your option: ");
         t = input_check_opt();
-        switch (t) {
-            case 0:
-                printf("\nThank you! Buy!\n");
-                break;
-            case 1:
-                output(person, n);
-                break;
-            case 2:
-                qsort(person, n, sizeof(struct people), comp_by_name);
-                break;
-            case 3:
-                qsort(person, n, sizeof(struct people), comp_by_money);
-                break;
-            case 4:
-                qsort(person, n, sizeof(struct people), comp_by_residence);
-                break;
-            case 5:
-                qsort(person, n, sizeof(struct people), comp_by_age);
-                break;
-            case 6:
-                qsort(person, n, sizeof(struct people), comp_full);
-                break;
-            case 7:
-                if (n!=0) {
-                    delite_elem(person, n);
-                    n--;
-                    if (n!=0) {
-                        person = (struct people*)realloc(person, n * sizeof(struct people));
-                    }
-                }
-                break;
-            default:
-                t=0;
-                break;
-              
-        }
+        process_option(person, n, t);
     }
     free(person);
 }
+
