@@ -20,9 +20,10 @@ int input_check_del(int n)
     return val;
 }
 
-int check_type(char ch, char str[], FILE* ptr)
+int check_type(char ch, char* str, FILE* ptr)
 {
-    int i = 0, count = 0;
+    int i = 0;
+    int count = 0;
     while (ch == str[i] && i < (int)strlen(str)) {
         ch = fgetc(ptr);
         count++;
@@ -71,14 +72,17 @@ void add_person(struct people* person, int n, int t, FILE* ptr)
         strcpy(person[n].residence, line);
     }
     if (t == 4) {
-        for (int j = 0; j < strlen(line) - 1; j++) {
+        unsigned long long j;
+        for (j = 0; j < strlen(line) - 1; j++) {
             line[j] = line[j + 1];
         }
-        for (int j = strlen(line); j > strlen(line) - 5; j--) {
+        for (j = strlen(line); j > strlen(line) - 5; j--) {
             line[j] = '\0';
         }
 
-        int a = line[0] - '0', b = line[1] - '0', c = line[2] - '0';
+        int a = line[0] - '0';
+        int b = line[1] - '0';
+        int c = line[2] - '0';
         if (c >= 0 && c <= 9) {
             person[n].money = a * 100 + b * 10 + c;
         }
@@ -176,7 +180,7 @@ int comp_full(const void* typ1, const void* typ2)
     const struct people* p2 = (const struct people*)typ2;
 
     int cmp;
-    if (cmp = strcmp(p1->name, p2->name)) return cmp;
+    if (cmp == strcmp(p1->name, p2->name)) return cmp;
     return strcmp(p1->age, p2->age);
 }
 
@@ -234,10 +238,14 @@ void work_prog(struct people* person, int n)
                 if (n!=0) {
                     delite_elem(person, n);
                     n--;
-                    person = (struct people*)realloc(person, n * sizeof(struct people));
+                    if (n!=0) {
+                        person = (struct people*)realloc(person, n * sizeof(struct people));
+                    }
                 }
-
                 break;
+            default:
+                return 0;
+              
         }
     }
     free(person);
