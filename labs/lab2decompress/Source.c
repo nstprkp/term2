@@ -1,6 +1,6 @@
 #include "Header.h"
 
-void print_in_file(FILE* fp, char* val1, const char* val2, const char* add, char c)
+void print_in_file(FILE* fp, char* val1, const char* val2, const char* add)
 {
     if (add!=NULL) {
         
@@ -65,11 +65,11 @@ void final_step(FILE* f, FILE* fp, struct imp* temp, int ind)
                 while (i < ind && z == 0) {
                     if (strcmp(temp[i].val1, istr) == 0) {
 
-                        print_in_file(fp, temp[i].val2, temp[i].val1, add, c);
+                        print_in_file(fp, temp[i].val2, temp[i].val1, add);
                         z++;
                     }
                     if (strcmp(istr, temp[i].val2) == 0) {
-                        print_in_file(fp, temp[i].val1, temp[i].val2, add, c);
+                        print_in_file(fp, temp[i].val1, temp[i].val2, add);
                         z++;
                     }
                     i++;
