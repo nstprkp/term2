@@ -164,7 +164,7 @@ void new_insert(tree_node** head, char* value, int check)
                 continue;
             } else {
                 if (tmp->right != NULL) {
-                    tmp->right->data = NULL;
+                    free(tmp->right->data);
                 }
                 tmp->right->data = (char*)malloc(strlen(value) + 1);
                 strcpy(tmp->right->data, value);
@@ -178,7 +178,7 @@ void new_insert(tree_node** head, char* value, int check)
                 continue;
             } else {
                 if (tmp->left != NULL) {
-                    tmp->left->data = NULL;
+                    free(tmp->left->data);
                 }
                 tmp->left->data = (char*) malloc(strlen(value) + 1);
                 strcpy(tmp->left->data, value);
