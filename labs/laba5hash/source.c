@@ -21,7 +21,7 @@ unsigned int hash(const char* key, int num_buckets) {
     return hash % 3;
 }
 
-int input_check(char* str)
+int input_check(const char* str)
 {
     int g = 0;
     int point = 0;
@@ -73,7 +73,7 @@ HashTable* create_hash_table() {
     return table;
 }
 
-int move_to_head_in_cash(HashTable* table, char* key, char* value)
+int move_to_head_in_cash(HashTable* table, const char* key, const char* value)
 {
     int ch = 0;
     int index = hash(key, table->num_buckets);
@@ -108,7 +108,7 @@ int move_to_head_in_cash(HashTable* table, char* key, char* value)
     return ch;
 }
 
-void putt(HashTable* table, char* key, char* value)
+void putt(HashTable* table, const char* key, const char* value)
 {
     int index = hash(key, table->num_buckets);
 
@@ -167,7 +167,7 @@ void full_cash(HashTable* table)
     }
 }
 
-char* get(HashTable* table, char* key)
+char* get(HashTable* table, const char* key)
 {
     int index = hash(key, table->num_buckets);
     ListNode *node = table->buckets[index];
@@ -203,7 +203,7 @@ char* get(HashTable* table, char* key)
     return NULL;
 }
 
-char* find_IP_add(char* ip_ent)
+char* find_IP_add(const char* ip_ent)
 {
     FILE* fp;
     fp = fopen("input.txt", "r");
@@ -389,7 +389,7 @@ void domain_by_IP(void)
     }
 }
 
-void display_hash_table(struct HashTable* hashtable)
+void display_hash_table(const struct HashTable* hashtable)
 {
     for (int i = 0; i < hashtable->num_buckets; i++) {
         printf("Bucket %d:\t", i);
