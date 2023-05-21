@@ -330,7 +330,7 @@ void find_in_file (HashTable* table, char* domen, char* dop_domen)
               buff[tt] = 0;
         }
     }
-    fclose(f);
+    if (f!=NULL) {fclose(f);}
     if (ch == 1) {
         find_in_file(table, vv, domen);
     }
