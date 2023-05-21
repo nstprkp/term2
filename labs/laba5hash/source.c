@@ -294,34 +294,28 @@ void add_in_file(HashTable* table, FILE* f, char* domen, char* IP)
     }
 }
 
-void find_in_file(HashTable* table, const char* domen, const char* dop_domen)
+void find_in_file (HashTable* table, char* domen, char* dop_domen)
 {
-    FILE* f = fopen("input.txt", "r");
-    if (f == NULL) {
-        return;
-    }
-
+    FILE* f;
+    f = fopen("input.txt", "r");
     char buff[256];
-    char* kk = NULL;
-    char* vv = NULL;
     int count = 0;
+    char* kk;
+    char* vv;
     int check = 0;
     int ch = 0;
-
-    while (!feof(f) && check == 0) {
+    while (f!=NULL && !feof(f) && check == 0) {
         fscanf(f, "%255s", buff);
-
         if (count == 0) {
-            kk = (char*)malloc((strlen(buff) + 1) * sizeof(char));
+            kk = (char*)malloc((strlen(buff)+2)*sizeof(char));
             strcpy(kk, buff);
         }
-        else if (count == 2 && strcmp(buff, "CNAME") == 0) {
+        if (count == 2 && strcmp(buff, "CNAME") == 0) {
             ch = 1;
         }
-        else if (count == 3) {
-            vv = (char*)malloc((strlen(buff) + 1) * sizeof(char));
+        if (count == 3) {
+            vv = (char*)malloc(strlen(buff)*sizeof(char));
             strcpy(vv, buff);
-
             if (strcmp(kk, domen) == 0 && ch == 0) {
                 if (move_to_head_in_cash(table, dop_domen, vv) == 0) {
                     putt(table, dop_domen, vv);
@@ -329,26 +323,23 @@ void find_in_file(HashTable* table, const char* domen, const char* dop_domen)
                 }
                 check = 1;
             }
-            else if (strcmp(kk, domen) == 0 && ch == 1) {
+            if (strcmp(kk, domen) == 0 && ch == 1) {
                 ch = 2;
                 check = 1;
             }
-
             if (ch != 0) {
                 ch--;
             }
-
-            count = 0;
+            count=0;
         }
         else {
             count++;
         }
-
-        memset(buff, 0, sizeof(buff));
+        for (int tt = 0; tt < 256; tt++) {
+              buff[tt] = 0;
+        }
     }
-
-    fclose(f);
-
+    if (f!=NULL) {fclose(f);}
     if (ch == 1) {
         find_in_file(table, vv, domen);
     }
