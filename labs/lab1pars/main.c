@@ -18,6 +18,7 @@ int main(void)
 	}
 	else { 
 		printf("\nFile not found.\n"); 
+		free(person);
 	      	return 0;
 	}
 
