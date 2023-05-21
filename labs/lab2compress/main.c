@@ -9,6 +9,7 @@ int main()
     struct stack* st2;
     st1 = (struct stack*)calloc(1, sizeof(struct stack));
     st2 = (struct stack*)calloc(1, sizeof(struct stack));
+    
     if (st1 != NULL) {
         st1[0].pointer = 0;
         st1[0].value = (char**)calloc(1, sizeof(char*));
@@ -17,11 +18,18 @@ int main()
         st2[0].pointer = 0;
         st2[0].value = (char**)calloc(1, sizeof(char*));
     }
+    
     int n=0;
     int a = 0;
     char buff[256];
     stream = fopen("input.txt", "r");
-    if (stream != NULL) {
+    if (stream == NULL) {
+        printf("\nFile not found.\n");
+        free(st1);
+        free(st2);
+        return 0;
+    }
+
         while (!feof(stream)) {
             fscanf(stream, "%255s", buff);
 
@@ -40,12 +48,6 @@ int main()
                 buff[tt] = 0;
             }
         }
-    }
-    else {
-        printf("\nFile not found.\n");
-        free(st1); free(st2);
-        return 0;
-    }
     fclose(stream);
 
     struct words* word;
