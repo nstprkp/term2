@@ -20,7 +20,7 @@ int input_check_del(int n)
     return val;
 }
 
-int check_type(char ch, char* str, FILE* ptr)
+int check_type(char ch, const char* str, FILE* ptr)
 {
     int i = 0;
     int count = 0;
