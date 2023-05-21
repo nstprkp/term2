@@ -102,7 +102,7 @@ void print_in_file(FILE* fp, char* val1, const char* val2, const char* add, char
                 z++;
             }
             fprintf(fp, "%s", val1);
-            z = z + strlen(val2);
+            z = z + (int)strlen(val2);
             while (add[z] != '\n' && add[z] != '\0') {
                 fprintf(fp, "%c", add[z]);
                 z++;
