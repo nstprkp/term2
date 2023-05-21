@@ -24,8 +24,10 @@ int check_type(char ch, char* str, FILE* ptr)
 {
     int i = 0;
     int count = 0;
+    int chr;
     while (ch == str[i] && i < (int)strlen(str)) {
-        ch = fgetc(ptr);
+        chr = fgetc(ptr);
+        ch = (char)chr;
         count++;
         i++;
     }
@@ -95,20 +97,24 @@ void add_person(struct people* person, int n, int t, FILE* ptr)
 
 void made(struct people* person, int n, char c, int t, char const_find[], FILE*ptr)
 {
+    int chr;
     char ch;
-    ch = fgetc(ptr);
+    chr = fgetc(ptr);
+    ch = (char)chr;
     while (!feof(ptr) && ch != c) {
         ch = fgetc(ptr);
     }
 
     while (check_type(ch, const_find, ptr) != 1) {
         while (!feof(ptr) && ch != c) {
-            ch = fgetc(ptr);
+            chr = fgetc(ptr);
+            ch = (char)chr;
         }
     }
 
     while (!feof(ptr) && ch != '>') {
-        ch = fgetc(ptr);
+        chr = fgetc(ptr);
+        ch = (char)chr;
     }
     add_person(person, n, t, ptr);
 }
@@ -124,7 +130,9 @@ void find_inf(struct people* person, char ch, int* n, FILE* ptr)
         int z = 0;
         while (ch != '.' && z < 6) {
             z++;
-            ch = fgetc(ptr);
+            int chr;
+            chr = fgetc(ptr);
+            ch = (char)chr;
         }
 
         if (z < 6) { t++; }
