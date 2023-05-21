@@ -20,7 +20,7 @@ struct imp {
     char* val2;
 };
 
-void push(struct stack* st, char* val, int n, int t);
+void push(struct stack* st, const char* val, int n, int t);
 void pop(struct stack* st);
 char* top(struct stack* st);
 int counting(struct stack* st1, struct stack* st2, char* onTop, int n, int t);
