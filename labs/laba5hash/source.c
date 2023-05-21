@@ -222,6 +222,7 @@ char* find_IP_add(char* ip_ent)
             vv = (char*)malloc((strlen(buff)+1)*sizeof(char));
             strcpy(vv, buff);
             if (strcmp(vv, ip_ent) == 0) {
+                free(vv);
                 fclose(fp);
                 return kk;
             }
@@ -262,6 +263,7 @@ void add_in_file(HashTable* table, FILE* f, char* domen, char* IP)
                 fprintf(f, "\n%s\tIN\tCNAME\t%s", domen, t);
             }
             if (move_to_head_in_cash(table, domen, ip_ent) == 0) {
+                free(t);
                 putt(table, domen, ip_ent);
                 full_cash(table);
             }
