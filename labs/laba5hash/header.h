@@ -22,7 +22,7 @@ typedef struct HashTable {
 } HashTable;
 
 char* get_str(char *s, int k);
-unsigned int hash(char* key, int num_buckets);
+unsigned int hash(const char* key, int num_buckets);
 HashTable* create_hash_table();
 int move_to_head_in_cash(HashTable* table, char* key, char* value);
 void putt(HashTable* table, char* key, char* value);
