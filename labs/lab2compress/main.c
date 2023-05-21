@@ -89,8 +89,7 @@ int main()
                 a++;
             }
             else {
-                if (st2[0].pointer >= 0) {
-                    if (st2[0].value != NULL) {
+                if (st2[0].pointer >= 0 && st2[0].value != NULL) {
                         if (st2 != NULL) {
                             st2[0].pointer--;
                         }
@@ -114,7 +113,6 @@ int main()
                         onTop2 = NULL;
                         free(onTop2);
                         onTop2 = NULL;
-                    }
                 }
             }
         }
