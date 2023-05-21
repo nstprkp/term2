@@ -132,7 +132,10 @@ void final_step(FILE* f, FILE* fp, struct imp* temp, int ind)
         if (add != NULL) {
             add = strcpy(add, buff);
         }
-        char c = fgetc(f);
+        int ch; 
+        char c; 
+        ch = fgetc(f);
+        c = (char)ch;
 
         char sep[16] = "[](),*.;:!?\" ";
         char* istr;
