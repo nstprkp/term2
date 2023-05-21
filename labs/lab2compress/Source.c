@@ -1,6 +1,6 @@
 #include "Header.h"
 
-void push(struct stack* st, const char* val, int n, int t)
+void push(struct stack* st, char* val, int n, int t)
 {
     if (val == NULL) {
         return;
@@ -29,14 +29,14 @@ void pop(struct stack* st) {
     st[0].pointer--;
 }
 
-char* top(const struct stack* st) {
+char* top(struct stack* st) {
     if (st[0].pointer == 0) {
         exit(1);
     }
     return st[0].value[st[0].pointer];
 }
 
-int counting(struct stack* st1, struct stack* st2, const char* onTop, int n, int t)
+int counting(struct stack* st1, struct stack* st2, char* onTop, int n, int t)
 {
     int cnt = 1;
     pop(st1);
@@ -50,14 +50,14 @@ int counting(struct stack* st1, struct stack* st2, const char* onTop, int n, int
     return cnt;
 }
 
-void make_struct(struct words* word, const char* onTop, int cnt, int kol)
+void make_struct(struct words* word, char* onTop, int cnt, int kol)
 {
     word[kol].val = (char*)calloc(strlen(onTop)+1, sizeof(char));
     if (word[kol].val != 0) {
         strcpy(word[kol].val, onTop);
     }
     word[kol].num = cnt;
-    word[kol].len = (int)strlen(onTop);
+    word[kol].len = strlen(onTop);
 }
 
 int comp_by_all(const void* typ1, const void* typ2) {
@@ -92,7 +92,7 @@ void free_memory(struct stack* st1, struct stack* st2, int n)
     st2 = NULL;
 }
 
-void print_in_file(FILE* fp, char* val1, const char* val2, const char* add, char c)
+void print_in_file(FILE* fp, char* val1, char* val2, char* add, char c)
 {
     if (add != NULL) {
         if (strcmp(val2, add) != 0) {
@@ -102,7 +102,7 @@ void print_in_file(FILE* fp, char* val1, const char* val2, const char* add, char
                 z++;
             }
             fprintf(fp, "%s", val1);
-            z = z + (int)strlen(val2);
+            z = z + strlen(val2);
             while (add[z] != '\n' && add[z] != '\0') {
                 fprintf(fp, "%c", add[z]);
                 z++;
@@ -136,12 +136,11 @@ void final_step(FILE* f, FILE* fp, struct imp* temp, int ind)
 
         char sep[16] = "[](),*.;:!?\" ";
         char* istr;
-        istr = (char*)calloc(256, sizeof(char));
-        
+        istr = calloc(256, sizeof(char));
+        char* saveptr = NULL;
         istr = strtok(buff, sep);
 
-        int i = 0;
-        int t = 0;
+        int i = 0, t = 0;
         if (temp != NULL && istr != NULL) {
             while (i < ind && t == 0) {
                 if (strcmp(temp[i].val1, istr) == 0) {
