@@ -15,7 +15,7 @@ unsigned int hash(const char* key, int num_buckets) {
     for (int i = 0; key[i] != '\0'; i++) {
         hash = hash * 31 + key[i];
     }
-    return hash % HASH_SIZE;
+    return hash % 3;
 }
 
 int input_check(char* str)
@@ -62,8 +62,8 @@ int input_check(char* str)
 HashTable* create_hash_table() {
     HashTable* table = (HashTable*) malloc(sizeof(HashTable));
     table->size = 0;
-    table->capacity = HASH_SIZE;
-    table->num_buckets = HASH_SIZE;
+    table->capacity = 3;
+    table->num_buckets = 3;
     table->buckets = (ListNode**) calloc(table->num_buckets, sizeof(ListNode*));
     table->head = NULL;
     table->tail = NULL;
