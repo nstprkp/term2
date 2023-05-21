@@ -38,7 +38,7 @@ int check_type(char ch, char* str, FILE* ptr)
 void add_person(struct people* person, int n, int t, FILE* ptr)
 {
     char* line = NULL;
-
+    int num = 0;
     line = (char*)malloc(1000*sizeof(char));
     for (int i = 0;; i++)
     {
@@ -49,12 +49,13 @@ void add_person(struct people* person, int n, int t, FILE* ptr)
         if (line[i] == '<')
         {
             line[i] = '\0';
+            num = i + 1;
             break;
         }
     }
 
     if (line[0] == 32) {
-        int length = strlen(line);
+        int length = num;
         if (length >= 2) {
             for (int j = 0; j < length - 1; j++) {
                 line[j] = line[j + 1];
