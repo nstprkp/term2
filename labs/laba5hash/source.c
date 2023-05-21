@@ -10,7 +10,7 @@ char* get_str(char *s, int k)
     return s;
 }
 
-unsigned int hash(char* key, int num_buckets) {
+unsigned int hash(const char* key, int num_buckets) {
     unsigned int hash = 0;
     for (int i = 0; key[i] != '\0'; i++) {
         hash = hash * 31 + key[i];
