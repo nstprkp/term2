@@ -1,11 +1,15 @@
 #include "header.h"
 
-char* get_str(char *s, int k)
+char* get_str(char* s, int k)
 {
     char c;
     int ch;
-    int i=0;
-    while(--k > 0 && (ch = getchar())!=EOF && ch != 13) {
+    int i = 0;
+    while (--k > 0) {
+        ch = getchar();
+        if (ch == EOF || ch == 13) {
+            break;
+        }
         c = (char)ch;
         s[i++] = c;
     }
@@ -78,33 +82,35 @@ int move_to_head_in_cash(HashTable* table, const char* key, const char* value)
     int ch = 0;
     int index = hash(key, table->num_buckets);
     ListNode *node = table->buckets[index];
-    while (node != NULL) {
-        if (strcmp(node->key, key) == 0) {
-            free(node->value);
-            node->value = (char *) malloc(strlen(value) + 1);
-            strcpy(node->value, value);
-            // Move the node to the head of the list
-            if (node != table->head) {
 
-                if (node == table->tail) {
-                    table->tail = node->prev;
-                }
-                if (node->prev != NULL) {
-                    node->prev->next = node->next;
-                }
-                if (node->next != NULL) {
-                    node->next->prev = node->prev;
-                }
-                node->prev = NULL;
-                node->next = table->head;
-                table->head->prev = node;
-                table->head = node;
-            }
-            ch++;
-            return ch;
-        }
+    while (node != NULL && strcmp(node->key, key) != 0) {
         node = node->next;
     }
+
+    if (node != NULL) {
+        free(node->value);
+        node->value = (char*) malloc(strlen(value) + 1);
+        strcpy(node->value, value);
+
+        if (node != table->head) {
+            if (node == table->tail) {
+                table->tail = node->prev;
+            }
+            if (node->prev != NULL) {
+                node->prev->next = node->next;
+            }
+            if (node->next != NULL) {
+                node->next->prev = node->prev;
+            }
+            node->prev = NULL;
+            node->next = table->head;
+            table->head->prev = node;
+            table->head = node;
+        }
+
+        ch++;
+    }
+
     return ch;
 }
 
