@@ -20,14 +20,12 @@ int input_check_del(int n)
     return val;
 }
 
-int check_type(char ch, const char* str, FILE* ptr)
+int check_type(char ch, char* str, FILE* ptr)
 {
     int i = 0;
     int count = 0;
-    int chr;
     while (ch == str[i] && i < (int)strlen(str)) {
-        chr = fgetc(ptr);
-        ch=(char)chr;
+        ch = fgetc(ptr);
         count++;
         i++;
     }
@@ -43,9 +41,7 @@ void add_person(struct people* person, int n, int t, FILE* ptr)
     for (int i = 0;; i++)
     {
         line = (char*)realloc(line, (i + 1) * sizeof(char));
-        int chr;
-        chr = fgetc(ptr);
-        line[i] = (char)chr;
+        line[i] = fgetc(ptr);
         if (line[i] == '<')
         {
             line[i] = '\0';
@@ -76,11 +72,11 @@ void add_person(struct people* person, int n, int t, FILE* ptr)
         strcpy(person[n].residence, line);
     }
     if (t == 4) {
-        int j;
+        unsigned long long j;
         for (j = 0; j < strlen(line) - 1; j++) {
             line[j] = line[j + 1];
         }
-        for (j = (int)strlen(line); j > strlen(line) - 5; j--) {
+        for (j = strlen(line); j > strlen(line) - 5; j--) {
             line[j] = '\0';
         }
 
@@ -100,27 +96,19 @@ void add_person(struct people* person, int n, int t, FILE* ptr)
 void made(struct people* person, int n, char c, int t, char const_find[], FILE*ptr)
 {
     char ch;
-    int chr;
-    chr = fgetc(ptr);
-    ch=(char)chr;
+    ch = fgetc(ptr);
     while (!feof(ptr) && ch != c) {
-        int chr1;
-        chr1 = fgetc(ptr);
-        ch=(char)chr1;
+        ch = fgetc(ptr);
     }
 
     while (check_type(ch, const_find, ptr) != 1) {
         while (!feof(ptr) && ch != c) {
-            int chr1;
-            chr1 = fgetc(ptr);
-            ch=(char)chr1;
+            ch = fgetc(ptr);
         }
     }
 
     while (!feof(ptr) && ch != '>') {
-        int chr1;
-        chr1 = fgetc(ptr);
-        ch=(char)chr1;
+        ch = fgetc(ptr);
     }
     add_person(person, n, t, ptr);
 }
@@ -191,7 +179,8 @@ int comp_full(const void* typ1, const void* typ2)
     const struct people* p1 = (const struct people*)typ1;
     const struct people* p2 = (const struct people*)typ2;
 
-    if (strcmp(p1->name, p2->name) != 0) return strcmp(p1->name, p2->name);
+    int cmp;
+    if (cmp == strcmp(p1->name, p2->name)) return cmp;
     return strcmp(p1->age, p2->age);
 }
 
@@ -255,8 +244,7 @@ void work_prog(struct people* person, int n)
                 }
                 break;
             default:
-                t=0;
-                break;
+                return 0;
               
         }
     }
