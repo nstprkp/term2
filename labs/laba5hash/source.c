@@ -209,7 +209,7 @@ char* find_IP_add(char* ip_ent)
     char buff[n];
     char* kk;
     char* vv;
-    while (!feof(fp) && fp!=NULL) {
+    while (fp!=NULL && !feof(fp)) {
         fscanf(fp, "%255s", buff);
         if (count == 0) {
             kk = (char*)malloc((strlen(buff)+2)*sizeof(char));
@@ -227,11 +227,8 @@ char* find_IP_add(char* ip_ent)
         else {
             count++;
         }
-      /*  for (int tt = 0; tt < 256; tt++) {
-            buff[tt] = 0;
-        }*/
     }
-    fclose(fp);
+    if (fp!=NULL) {fclose(fp);}
     return NULL;
 }
 
@@ -292,16 +289,14 @@ void find_in_file (HashTable* table, char* domen, char* dop_domen)
     char* vv;
     int check = 0;
     int ch = 0;
-    while (!feof(f) && check == 0 && f!=NULL) {
+    while (f!=NULL && !feof(f) && check == 0) {
         fscanf(f, "%255s", buff);
         if (count == 0) {
             kk = (char*)malloc((strlen(buff)+2)*sizeof(char));
             strcpy(kk, buff);
         }
-        if (count == 2) {
-            if (strcmp(buff, "CNAME") == 0) {
-                ch = 1;
-            }
+        if (count == 2 && strcmp(buff, "CNAME") == 0) {
+            ch = 1;
         }
         if (count == 3) {
             vv = (char*)malloc(strlen(buff)*sizeof(char));
