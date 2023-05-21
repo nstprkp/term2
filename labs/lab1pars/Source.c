@@ -239,6 +239,7 @@ void delete_element(struct people* person, int* n)
         (*n)--;
         if (*n != 0) {
             person = (struct people*)realloc(person, *n * sizeof(struct people));
+            free(person);
         }
     }
 }
