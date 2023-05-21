@@ -1,6 +1,6 @@
 #include "Header.h"
 
-void print_in_file(FILE* fp, char* val1, char* val2, char* add, char c)
+void print_in_file(FILE* fp, char* val1, const char* val2, const char* add, char c)
 {
     if (add!=NULL) {
         
@@ -11,7 +11,7 @@ void print_in_file(FILE* fp, char* val1, char* val2, char* add, char c)
                 z++;
             }
             fprintf(fp, "%s", val1);
-            z = z + strlen(val2);
+            z = z + (int)strlen(val2);
             while (add[z] != '\n' && add[z] != '\0') {
                 fprintf(fp, "%c", add[z]);
                 z++;
@@ -48,12 +48,13 @@ void final_step(FILE* f, FILE* fp, struct imp* temp, int ind)
             }
             
             c = ' ';
-            c = fgetc(f);
-
+            int ch;
+            ch = fgetc(f);
+            c = (char)ch;
+            
             char sep[16] = "[](),*.;:!?\" ";
             char* istr;
             istr = (char*)calloc(256, sizeof(char));
-            char* saveptr = NULL;
             if (buff != NULL) {
                 istr = strtok(buff, sep);
                 istr = (char*)realloc(istr, (strlen(buff)+1)*sizeof(char));
