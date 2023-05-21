@@ -43,7 +43,9 @@ void add_person(struct people* person, int n, int t, FILE* ptr)
     for (int i = 0;; i++)
     {
         line = (char*)realloc(line, (i + 1) * sizeof(char));
-        line[i] = fgetc(ptr);
+        int chr;
+        chr = fgetc(ptr);
+        line[i] = (char)chr;
         if (line[i] == '<')
         {
             line[i] = '\0';
@@ -102,7 +104,8 @@ void made(struct people* person, int n, char c, int t, char const_find[], FILE*p
     chr = fgetc(ptr);
     ch = (char)chr;
     while (!feof(ptr) && ch != c) {
-        ch = fgetc(ptr);
+        chr = fgetc(ptr);
+        ch = (char)chr;
     }
 
     while (check_type(ch, const_find, ptr) != 1) {
