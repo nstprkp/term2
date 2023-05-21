@@ -22,7 +22,7 @@ int input_check(char* str)
 {
     int g = 0;
     int point = 0;
-    int sum;
+    int sum = 0;
     int i = 0;
     for (int j = 0; j < strlen(str); j++) {
         if (str[j] == 46) {point++;}
