@@ -260,7 +260,6 @@ void process_option(struct people* person, int n, int t)
             delete_element(person, &n);
             break;
         default:
-            t = 0;
             break;
     }
 }
