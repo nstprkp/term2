@@ -84,16 +84,19 @@ void add_person(struct people* person, int n, int t, FILE* ptr)
     }
     if (t == 4) {
         unsigned long long j;
-        for (j = 0; j < strlen(line) - 1; j++) {
+        
+        for (j = 0; j < num - 1; j++) {
             line[j] = line[j + 1];
         }
-        for (j = strlen(line); j > strlen(line) - 5; j--) {
+        for (j = num; j > num - 5; j--) {
             line[j] = '\0';
         }
 
         int a = line[0] - '0';
-        int b = line[1] - '0';
-        int c = line[2] - '0';
+        int b;
+        if (num>1) {b = line[1] - '0';}
+        int c;
+        if (num>2) {c = line[2] - '0';}
         if (c >= 0 && c <= 9) {
             person[n].money = a * 100 + b * 10 + c;
         }
