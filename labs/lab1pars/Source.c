@@ -232,6 +232,17 @@ void menu()
     printf("0. Exit\n");
 }
 
+void delete_element(struct people* person, int* n)
+{
+    if (*n != 0) {
+        delite_elem(person, *n);
+        (*n)--;
+        if (*n != 0) {
+            person = (struct people*)realloc(person, *n * sizeof(struct people));
+        }
+    }
+}
+
 void process_option(struct people* person, int n, int t)
 {
     switch (t) {
@@ -261,17 +272,6 @@ void process_option(struct people* person, int n, int t)
             break;
         default:
             break;
-    }
-}
-
-void delete_element(struct people* person, int* n)
-{
-    if (*n != 0) {
-        delite_elem(person, *n);
-        (*n)--;
-        if (*n != 0) {
-            person = (struct people*)realloc(person, *n * sizeof(struct people));
-        }
     }
 }
 
