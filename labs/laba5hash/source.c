@@ -148,9 +148,8 @@ void full_cash(HashTable* table)
         ListNode *evict_node = table->tail;
 
         table->tail = evict_node->prev;
-        if (table->tail->next != NULL) {
+        if (table->tail != NULL) {
             table->tail->next = NULL;
-            free(table->tail->next);
         }
         int evict_index = hash(evict_node->key, table->num_buckets);
         if (table->buckets[evict_index] == evict_node) {
