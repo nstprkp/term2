@@ -57,7 +57,7 @@ void make_struct(struct words* word, const char* onTop, int cnt, int kol)
         strcpy(word[kol].val, onTop);
     }
     word[kol].num = cnt;
-    word[kol].len = strlen(onTop);
+    word[kol].len = (int)strlen(onTop);
 }
 
 int comp_by_all(const void* typ1, const void* typ2) {
