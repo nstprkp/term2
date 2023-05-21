@@ -1,6 +1,6 @@
 #include "Header.h"
 
-void push(struct stack* st, char* val, int n, int t)
+void push(struct stack* st, const char* val, int n, int t)
 {
     if (val == NULL) {
         return;
