@@ -22,7 +22,6 @@ int main() {
                 f = fopen("input.txt", "r");
                 if (f == NULL) {
                     printf("File not found!\n");
-                    fclose(f);
                     return 0;
                 }
                 printf("choose what you want to find:\n");
@@ -49,6 +48,8 @@ int main() {
                 break;
             case 3:
                 display_cache(table);
+                break;
+            default:
                 break;
 
         }
