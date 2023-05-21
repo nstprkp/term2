@@ -96,6 +96,7 @@ void add_person(struct people* person, int n, int t, FILE* ptr)
         int b;
         if (num>1) {b = line[1] - '0';}
         int c;
+        person[n].money = 0;
         if (num>2) {c = line[2] - '0';}
         if (num > 2) {
             person[n].money = a * 100 + b * 10 + c;
