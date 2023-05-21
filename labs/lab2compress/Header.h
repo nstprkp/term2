@@ -22,7 +22,7 @@ struct imp {
 
 void push(struct stack* st, const char* val, int n, int t);
 void pop(struct stack* st);
-char* top(struct stack* st);
+char* top(const struct stack* st);
 int counting(struct stack* st1, struct stack* st2, const char* onTop, int n, int t);
 void make_struct(struct words* word, const char* onTop, int cnt, int kol);
 int comp_by_all(const void* typ1, const void* typ2);
