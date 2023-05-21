@@ -8,9 +8,11 @@ int main(void)
 	struct people* person;
 	person = (struct people*)calloc(1000, sizeof(struct people));
 	char ch;
+	int chr;
 	if ((ptr = fopen("input.txt", "r")) != NULL) {
 		while (!feof(ptr)) {
-			ch = fgetc(ptr);
+			chr = fgetc(ptr);
+			ch=(char)chr;
 			if (ch == 'm') { find_inf(person, ch, &n, ptr); }
 			n++;
 		}
