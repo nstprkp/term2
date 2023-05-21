@@ -207,12 +207,18 @@ int comp_full(const void* typ1, const void* typ2)
 
 void delite_elem(struct people* mas, int n)
 {
-    printf("Choose number of struct that you want to delete (1..%d): ", n);
+    printf("Choose the number of the struct that you want to delete (1..%d): ", n);
     int nom = input_check_del(n); nom--;
-    for (int i = nom; i < n - 1; i++) {
-        mas[i] = mas[i + 1];
+
+    if (nom >= 0 && nom < n) {
+        for (int i = nom; i < n - 1; i++) {
+            mas[i] = mas[i + 1];
+        }
+    } else {
+        printf("Invalid struct number. No deletion performed.\n");
     }
 }
+
 
 void menu()
 {
