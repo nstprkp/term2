@@ -1,18 +1,19 @@
 #include "Header.h"
 
-char* get_str(char* s, int k)
+char* getStr(char* s, int k)
 {
     char c;
-    int ch;
+    int chr;
     int i = 0;
     while (--k > 0) {
-        ch = getchar();
-        if (ch == EOF || ch == 13) {
+        chr = getchar();
+        if (chr == EOF || chr == 13) {
             break;
         }
-        c = (char)ch;
+        c = (char)chr;
         s[i++] = c;
     }
     s[i] = '\0';
     return s;
 }
+
