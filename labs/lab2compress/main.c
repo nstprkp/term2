@@ -26,60 +26,68 @@ void process_words(struct stack* st1, struct stack* st2, struct words** word, in
         int cnt;
 
         if (st1[0].pointer >= 0) {
-            if (st1 != NULL) {
-                st1[0].pointer--;
-            }
-
-            char* onTop;
-            onTop = top(st1);
-            st2[0].pointer = 0;
-            cnt = counting(st1, st2, onTop, *n, *a);
-
-            if (*word != NULL) {
-                make_struct(*word, onTop, cnt, *kol);
-                (*kol)++;
-                struct words* ptr;
-                ptr = (struct words*)realloc(*word, (*kol + 1) * sizeof(struct words));
-                if (ptr != NULL) {
-                    *word = ptr;
-                }
-                ptr = NULL;
-                free(ptr);
-                ptr = NULL;
-            }
-            onTop = NULL;
-            free(onTop);
-            onTop = NULL;
-            (*a)++;
+            process_st1(st1, st2, word, kol, n, a, &cnt);
         } else {
-            if (st2[0].pointer >= 0 && st2[0].value != NULL) {
-                if (st2 != NULL) {
-                    st2[0].pointer--;
-                }
-                char* onTop2;
-                onTop2 = top(st2);
-                st1[0].pointer = 0;
-                cnt = counting(st2, st1, onTop2, *n, *a);
-
-                if (*word != NULL) {
-                    make_struct(*word, onTop2, cnt, *kol);
-                    (*kol)++;
-                    struct words* ptr;
-                    ptr = (struct words*)realloc(*word, (*kol + 1) * sizeof(struct words));
-                    if (ptr != NULL) {
-                        *word = ptr;
-                    }
-                    ptr = NULL;
-                    free(ptr);
-                    ptr = NULL;
-                }
-                onTop2 = NULL;
-                free(onTop2);
-                onTop2 = NULL;
-            }
+            process_st2(st1, st2, word, kol, n, a, &cnt);
         }
     }
 }
+
+void process_st1(struct stack* st1, struct stack* st2, struct words** word, int* kol, int* n, int* a, int* cnt) {
+    if (st1 != NULL) {
+        st1[0].pointer--;
+    }
+
+    char* onTop;
+    onTop = top(st1);
+    st2[0].pointer = 0;
+    *cnt = counting(st1, st2, onTop, *n, *a);
+
+    if (*word != NULL) {
+        make_struct(*word, onTop, *cnt, *kol);
+        (*kol)++;
+        struct words* ptr;
+        ptr = (struct words*)realloc(*word, (*kol + 1) * sizeof(struct words));
+        if (ptr != NULL) {
+            *word = ptr;
+        }
+        ptr = NULL;
+        free(ptr);
+        ptr = NULL;
+    }
+    onTop = NULL;
+    free(onTop);
+    onTop = NULL;
+    (*a)++;
+}
+
+void process_st2(struct stack* st1, struct stack* st2, struct words** word, int* kol, int* n, int* a, int* cnt) {
+    if (st2 != NULL) {
+        st2[0].pointer--;
+    }
+
+    char* onTop2;
+    onTop2 = top(st2);
+    st1[0].pointer = 0;
+    *cnt = counting(st2, st1, onTop2, *n, *a);
+
+    if (*word != NULL) {
+        make_struct(*word, onTop2, *cnt, *kol);
+        (*kol)++;
+        struct words* ptr;
+        ptr = (struct words*)realloc(*word, (*kol + 1) * sizeof(struct words));
+        if (ptr != NULL) {
+            *word = ptr;
+        }
+        ptr = NULL;
+        free(ptr);
+        ptr = NULL;
+    }
+    onTop2 = NULL;
+    free(onTop2);
+    onTop2 = NULL;
+}
+
 
 void process_word_struct(struct words* word, struct imp** temp, int* ind, int kol) {
     int s = 0;
