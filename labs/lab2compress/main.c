@@ -95,35 +95,38 @@ void process_word_struct(struct words* word, struct imp** temp, int* ind, int ko
     if (word != NULL) {
         while (s != l) {
             if (word[l].len > word[s].len && word[l].num > word[s].num && word[l].met == 0 && word[s].met == 0) {
-                (*temp)[*ind].val1 = (char*)calloc(word[l].len + 1, sizeof(char));
-                strcpy((*temp)[*ind].val1, word[l].val);
-
-                (*temp)[*ind].val2 = (char*)calloc(word[s].len + 1, sizeof(char));
-                strcpy((*temp)[*ind].val2, word[s].val);
-
-                int free_memory = abs((word[l].len * word[l].num) - (word[s].len * word[s].num));
-                int need_memory = (word[l].len + word[s].len + 5);
-
-                if (free_memory <= need_memory) {
-                    l--;
-                    continue;
-                }
-
-                (*ind)++;
-                struct imp* ptr;
-                ptr = (struct imp*)realloc(*temp, (*ind + 1) * sizeof(struct imp));
-                if (ptr != NULL) {
-                    *temp = ptr;
-                }
-                s++;
-                ptr = NULL;
-                free(ptr);
-                ptr = NULL;
+                process_matching_words(&word[l], &word[s], temp, ind);
             }
             l--;
         }
     }
 }
+
+void process_matching_words(struct words* word1, struct words* word2, struct imp** temp, int* ind) {
+    (*temp)[*ind].val1 = (char*)calloc(word1->len + 1, sizeof(char));
+    strcpy((*temp)[*ind].val1, word1->val);
+
+    (*temp)[*ind].val2 = (char*)calloc(word2->len + 1, sizeof(char));
+    strcpy((*temp)[*ind].val2, word2->val);
+
+    int free_memory = abs((word1->len * word1->num) - (word2->len * word2->num));
+    int need_memory = (word1->len + word2->len + 5);
+
+    if (free_memory <= need_memory) {
+        return;
+    }
+
+    (*ind)++;
+    struct imp* ptr;
+    ptr = (struct imp*)realloc(*temp, (*ind + 1) * sizeof(struct imp));
+    if (ptr != NULL) {
+        *temp = ptr;
+    }
+    ptr = NULL;
+    free(ptr);
+    ptr = NULL;
+}
+
 
 void process_output_file(FILE* f, FILE* fp, struct imp* temp, int ind) {
     if (f != NULL) {
