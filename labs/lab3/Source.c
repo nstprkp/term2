@@ -255,10 +255,10 @@ void median_filter(BMPFile* bmp, RGB_pix* pixels)
     RGB_pix* maskArray = NULL;
     int maskOffsetFromStart = (mask / 2);
 
-    bool condition1 = true;
-bool condition2 = true;
+    int condition1 = 1;
+int condition2 = 1;
 
-while (offset < arrayLength && condition1 && condition2) {
+while (offset < arrayLength && condition1==1 && condition2==1) {
     int maskStartingRow = 0;
     int t = offset / bmp->bhdr.width;
     if (t - maskOffsetFromStart > maskStartingRow) {
@@ -295,13 +295,12 @@ while (offset < arrayLength && condition1 && condition2) {
     pixels[arrayIndex].g = new_value.g;
     pixels[arrayIndex].b = new_value.b;
 
-    // Update conditions and variables
     col++;
     arrayIndex++;
     sq += 1;
     offset = abs(bmp->bhdr.width) * sq;
-    condition1 = (offset < arrayLength);
-    condition2 = (col < bmp->bhdr.width);
+    if (ofset>=arrayLength) {condition1 = 0;}
+    if (col >= bmp->bhdr.width) {condition2 = 0;}
 }
 
     for (int j = 0; j < abs(bmp->bhdr.height); j++) {
