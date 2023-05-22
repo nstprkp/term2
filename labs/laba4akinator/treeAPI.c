@@ -1,6 +1,6 @@
 #include "treeAPI.h"
 
-tree_node* get_free_node(char* data, tree_node* parent)
+tree_node* get_free_node(const char* data, tree_node* parent)
 {
     tree_node* new_node = (tree_node*)malloc(sizeof(tree_node));
     new_node->data = (char*)calloc(strlen(data)+1, sizeof(char));
@@ -80,7 +80,7 @@ char* get_elem(tree_node *head, int check)
                 i--;
                 continue;
             } else {
-                //  if (tmp->right->right == NULL) {ans++;}
+                
                 return tmp->right->data;
             }
         }
@@ -90,12 +90,12 @@ char* get_elem(tree_node *head, int check)
                 i--;
                 continue;
             } else {
-                //  if (tmp->left->left == NULL) {ans++;}
+                
                 return tmp->left->data;
             }
         }
     }
-    return head->data;
+    return str;
 }
 
 
