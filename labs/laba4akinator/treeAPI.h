@@ -9,7 +9,7 @@ typedef struct tree_node {
     struct tree_node* right;
 } tree_node;
 
-tree_node* get_free_node(char* data, tree_node* parent);
+tree_node* get_free_node(const char* data, const tree_node* parent);
 void insert(tree_node** head, char* value, int check);
 char* get_elem(tree_node *head, int check);
 int get_ans(tree_node *head, int check);
