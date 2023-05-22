@@ -57,8 +57,7 @@ int main() {
     j++;
     if (t == 1) {
         printf("\nYes! We guess your character!\n");
-        char *quest;
-        quest = (char *) malloc(256 * sizeof(char));
+        const char *quest;
         quest = get_elem(tree, check);
         char* str_new = (char*) calloc(1, sizeof(char));
         int i=0;
@@ -102,8 +101,7 @@ int main() {
         str_question = strcat(str_question, "\n");
         str_name = strcat(str_name, "!It's first time!\n");
         
-        char *val1;
-        val1 = (char *) malloc(256 * sizeof(char));
+        const char *val1;
         val1 = get_elem(tree, check);
         new_insert(&tree, str_question, check);
         new_insert(&tree, str_name, check * 2);
@@ -116,8 +114,7 @@ int main() {
     int x = 1;
     while (x < q) {
         for (int i = 1; i <= x; i++) {
-            char* val2;
-            val2 = (char*) malloc(256 * sizeof(char));
+            const char* val2;
             val2 = get_elem(tree, check);
             if (val2 != NULL) {
                 fprintf(fp, "%s", val2);
