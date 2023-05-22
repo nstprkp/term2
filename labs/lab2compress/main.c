@@ -34,8 +34,7 @@ int main()
             fscanf(stream, "%255s", buff);
 
             char sep[16] = ",.;*:!?()[]\" ";
-            char* istr;
-            istr = (char*)calloc(256, sizeof(char));
+            const char* istr;
             istr = strtok(buff, sep);
 
             if (st1 != NULL) {
