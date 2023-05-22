@@ -1,6 +1,6 @@
 #include "treeAPI.h"
 
-tree_node* get_free_node(const char* data, tree_node* parent)
+tree_node* get_free_node(const char* data, const tree_node* parent)
 {
     tree_node* new_node = (tree_node*)malloc(sizeof(tree_node));
     new_node->data = (char*)calloc(strlen(data)+1, sizeof(char));
