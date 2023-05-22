@@ -1,21 +1,13 @@
 #include "Header.h"
 
-int main()
-{
-    FILE* stream;
-    FILE* fp;
-    FILE* f;
-    char buff[256];
-    char st[6] = "/";
-
+struct imp* read_temp_from_file(FILE** stream, char* buff, char* st, int* ind) {
     struct imp* temp;
     temp = (struct imp*)malloc(1 * sizeof(struct imp));
-    int ind = 0;
-    stream = fopen("C:\\Users\\Настя\\source\\repos\\labb2\\labb2\\output.txt", "r");
-    if (stream != NULL) {
+    *stream = fopen("C:\\Users\\Настя\\source\\repos\\labb2\\labb2\\output.txt", "r");
+    if (*stream != NULL) {
         int t = 0;
-        while (!feof(stream) && t==0) {
-            fscanf(stream, "%255s", buff);
+        while (!feof(*stream) && t == 0) {
+            fscanf(*stream, "%255s", buff);
             if (strcmp(buff, st) == 0) {
                 t = 1;
             }
@@ -24,21 +16,21 @@ int main()
             }
         }
         if (t == 1) {
-            while (!feof(stream)) {
-                fscanf(stream, "%255s", buff);
-                temp[ind].val2 = (char*)calloc(strlen(buff)+1, sizeof(char));
-                if (temp[ind].val2 != NULL) {
-                    temp[ind].val2 = strcpy(temp[ind].val2, buff);
+            while (!feof(*stream)) {
+                fscanf(*stream, "%255s", buff);
+                temp[*ind].val2 = (char*)calloc(strlen(buff) + 1, sizeof(char));
+                if (temp[*ind].val2 != NULL) {
+                    temp[*ind].val2 = strcpy(temp[*ind].val2, buff);
                 }
 
-                fscanf(stream, "%255s", buff);
-                temp[ind].val1 = (char*)calloc(strlen(buff)+1, sizeof(char));
-                if (temp[ind].val1 != NULL) {
-                    temp[ind].val1 = strcpy(temp[ind].val1, buff);
+                fscanf(*stream, "%255s", buff);
+                temp[*ind].val1 = (char*)calloc(strlen(buff) + 1, sizeof(char));
+                if (temp[*ind].val1 != NULL) {
+                    temp[*ind].val1 = strcpy(temp[*ind].val1, buff);
                 }
-                ind++;
+                (*ind)++;
                 struct imp* ptr;
-                ptr = (struct imp*)realloc(temp, (ind + 1) * sizeof(struct imp));
+                ptr = (struct imp*)realloc(temp, (*ind + 1) * sizeof(struct imp));
                 if (ptr != NULL) {
                     temp = ptr;
                 }
@@ -50,25 +42,40 @@ int main()
                 }
             }
         }
-    }
-    else {
-        printf("File not found!\n");
+    } else {
         free(temp);
+        return NULL;
+    }
+    fclose(*stream);
+    return temp;
+}
+
+int main() {
+    FILE* stream;
+    FILE* fp;
+    FILE* f;
+    char buff[256];
+    char st[6] = "/";
+
+    struct imp* temp;
+    int ind = 0;
+    temp = read_temp_from_file(&stream, buff, st, &ind);
+    if (temp == NULL) {
+        printf("File not found!\n");
         return 0;
     }
-    fclose(stream);
 
     f = fopen("C:\\Users\\Настя\\source\\repos\\labb2\\labb2\\output.txt", "r");
     fp = fopen("out.txt", "w");
 
     if (f != NULL) {
         final_step(f, fp, temp, ind);
+    } else {
+        return 0;
     }
-    else { return 0; }
     fclose(f);
     fclose(fp);
-    free(temp);
-    temp = NULL;
-    printf("check yor result!\n");
+    free_temp(temp, ind);
+    printf("check your result!\n");
     return 0;
 }
