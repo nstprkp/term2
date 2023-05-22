@@ -1,7 +1,138 @@
 #include "Header.h"
 
-int main()
-{
+void process_input_file(struct stack* st1, FILE* stream, int* n, int* a) {
+    char buff[256];
+    while (!feof(stream)) {
+        fscanf(stream, "%255s", buff);
+
+        char sep[16] = ",.;*:!?()[]\" ";
+        const char* istr;
+        istr = strtok(buff, sep);
+
+        if (st1 != NULL) {
+            push(st1, istr, *n, *a);
+            (*n)++;
+        }
+        istr = NULL;
+        free(istr);
+        for (int tt = 0; tt < 256; tt++) {
+            buff[tt] = 0;
+        }
+    }
+}
+
+void process_words(struct stack* st1, struct stack* st2, struct words** word, int* kol, int* n, int* a) {
+    while (st1[0].pointer > 0 || st2[0].pointer > 0) {
+        int cnt;
+
+        if (st1[0].pointer >= 0) {
+            if (st1 != NULL) {
+                st1[0].pointer--;
+            }
+
+            char* onTop;
+            onTop = top(st1);
+            st2[0].pointer = 0;
+            cnt = counting(st1, st2, onTop, *n, *a);
+
+            if (*word != NULL) {
+                make_struct(*word, onTop, cnt, *kol);
+                (*kol)++;
+                struct words* ptr;
+                ptr = (struct words*)realloc(*word, (*kol + 1) * sizeof(struct words));
+                if (ptr != NULL) {
+                    *word = ptr;
+                }
+                ptr = NULL;
+                free(ptr);
+                ptr = NULL;
+            }
+            onTop = NULL;
+            free(onTop);
+            onTop = NULL;
+            (*a)++;
+        } else {
+            if (st2[0].pointer >= 0 && st2[0].value != NULL) {
+                if (st2 != NULL) {
+                    st2[0].pointer--;
+                }
+                char* onTop2;
+                onTop2 = top(st2);
+                st1[0].pointer = 0;
+                cnt = counting(st2, st1, onTop2, *n, *a);
+
+                if (*word != NULL) {
+                    make_struct(*word, onTop2, cnt, *kol);
+                    (*kol)++;
+                    struct words* ptr;
+                    ptr = (struct words*)realloc(*word, (*kol + 1) * sizeof(struct words));
+                    if (ptr != NULL) {
+                        *word = ptr;
+                    }
+                    ptr = NULL;
+                    free(ptr);
+                    ptr = NULL;
+                }
+                onTop2 = NULL;
+                free(onTop2);
+                onTop2 = NULL;
+            }
+        }
+    }
+}
+
+void process_word_struct(struct words* word, struct imp** temp, int* ind, int kol) {
+    int s = 0;
+    int l = kol - 1;
+    if (word != NULL) {
+        while (s != l) {
+            if (word[l].len > word[s].len && word[l].num > word[s].num && word[l].met == 0 && word[s].met == 0) {
+                (*temp)[*ind].val1 = (char*)calloc(word[l].len + 1, sizeof(char));
+                strcpy((*temp)[*ind].val1, word[l].val);
+
+                (*temp)[*ind].val2 = (char*)calloc(word[s].len + 1, sizeof(char));
+                strcpy((*temp)[*ind].val2, word[s].val);
+
+                int free_memory = abs((word[l].len * word[l].num) - (word[s].len * word[s].num));
+                int need_memory = (word[l].len + word[s].len + 5);
+
+                if (free_memory <= need_memory) {
+                    l--;
+                    continue;
+                }
+
+                (*ind)++;
+                struct imp* ptr;
+                ptr = (struct imp*)realloc(*temp, (*ind + 1) * sizeof(struct imp));
+                if (ptr != NULL) {
+                    *temp = ptr;
+                }
+                s++;
+                ptr = NULL;
+                free(ptr);
+                ptr = NULL;
+            }
+            l--;
+        }
+    }
+}
+
+void process_output_file(FILE* f, FILE* fp, struct imp* temp, int ind) {
+    if (f != NULL) {
+        final_step(f, fp, temp, ind);
+        fclose(f);
+    } else {
+        return;
+    }
+    fprintf(fp, "\n/\n");
+    for (int i = 0; i < ind; i++) {
+        fprintf(fp, "%s ", temp[i].val1);
+        fprintf(fp, "%s ", temp[i].val2);
+    }
+    fclose(fp);
+}
+
+int main() {
     FILE* stream;
     FILE* fp;
     FILE* f;
@@ -9,7 +140,7 @@ int main()
     struct stack* st2;
     st1 = (struct stack*)calloc(1, sizeof(struct stack));
     st2 = (struct stack*)calloc(1, sizeof(struct stack));
-    
+
     if (st1 != NULL) {
         st1[0].pointer = 0;
         st1[0].value = (char**)calloc(1, sizeof(char*));
@@ -18,10 +149,10 @@ int main()
         st2[0].pointer = 0;
         st2[0].value = (char**)calloc(1, sizeof(char*));
     }
-    
-    int n=0;
+
+    int n = 0;
     int a = 0;
-    char buff[256];
+
     stream = fopen("input.txt", "r");
     if (stream == NULL) {
         printf("\nFile not found.\n");
@@ -30,23 +161,7 @@ int main()
         return 0;
     }
 
-        while (!feof(stream)) {
-            fscanf(stream, "%255s", buff);
-
-            char sep[16] = ",.;*:!?()[]\" ";
-            const char* istr;
-            istr = strtok(buff, sep);
-
-            if (st1 != NULL) {
-                push(st1, istr, n, a);
-                n++;
-            }
-            istr = NULL;
-            free(istr);
-            for (int tt = 0; tt < 256; tt++) {
-                buff[tt] = 0;
-            }
-        }
+    process_input_file(st1, stream, &n, &a);
     fclose(stream);
 
     struct words* word;
@@ -59,64 +174,7 @@ int main()
     }
 
     if (st2 != NULL && st1 != NULL) {
-        while (st1[0].pointer > 0 || st2[0].pointer > 0) {
-            int cnt;
-
-            if (st1[0].pointer >= 0) {
-                if (st1 != NULL) {
-                    st1[0].pointer--;
-                }
-
-                char* onTop;
-                onTop = top(st1);
-                st2[0].pointer = 0;
-                cnt = counting(st1, st2, onTop,n,a);
-
-                if (word != NULL) {
-                    make_struct(word, onTop, cnt, kol);
-                    kol++;
-                    struct words* ptr;
-                    ptr = (struct words*)realloc(word, (kol + 1) * sizeof(struct words));
-                    if (ptr != NULL) {
-                        word = ptr;
-                    }
-                    ptr = NULL;
-                    free(ptr);
-                    ptr = NULL;
-                }
-                onTop = NULL;
-                free(onTop);
-                onTop = NULL;
-                a++;
-            }
-            else {
-                if (st2[0].pointer >= 0 && st2[0].value != NULL) {
-                        if (st2 != NULL) {
-                            st2[0].pointer--;
-                        }
-                        char* onTop2;
-                        onTop2 = top(st2);
-                        st1[0].pointer = 0;
-                        cnt = counting(st2, st1, onTop2, n,a);
-
-                        if (word != NULL) {
-                            make_struct(word, onTop2, cnt, kol);
-                            kol++;
-                            struct words* ptr;
-                            ptr = (struct words*)realloc(word, (kol + 1) * sizeof(struct words));
-                            if (ptr != NULL) {
-                                word = ptr;
-                            }
-                            ptr = NULL;
-                            free(ptr);
-                            ptr = NULL;
-                        }
-                        onTop2 = NULL;
-                        free(onTop2);
-                        onTop2 = NULL;
-                }
-            }
-        }
+        process_words(st1, st2, &word, &kol, &n, &a);
     }
 
     free_memory(st1, st2, n);
@@ -130,57 +188,13 @@ int main()
     temp = (struct imp*)malloc(1 * sizeof(struct imp));
 
     int ind = 0;
-    int s = 0;
-    int l = kol - 1;
-    if (word != NULL) {
-        while (s != l) {
-            if (word[l].len > word[s].len && word[l].num > word[s].num && word[l].met == 0 && word[s].met == 0) {
-                temp[ind].val1 = (char*)calloc(word[l].len + 1, sizeof(char));
-                strcpy(temp[ind].val1, word[l].val);
-
-                temp[ind].val2 = (char*)calloc(word[s].len + 1, sizeof(char));
-                strcpy(temp[ind].val2, word[s].val);
-
-                int free_memory = abs((word[l].len * word[l].num) - (word[s].len * word[s].num));
-                int need_memory = (word[l].len + word[s].len + 5);
-
-                if (free_memory <= need_memory) {
-                    l--;
-                    continue;
-                }
-
-                ind++;
-                struct imp* ptr;
-                ptr = (struct imp*)realloc(temp, (ind + 1) * sizeof(struct imp));
-                if (ptr != NULL) {
-                    temp = ptr;
-                }
-                s++;
-                ptr = NULL;
-                free(ptr);
-                ptr = NULL;
-            }
-            l--;
-        }
-    }
-
+    process_word_struct(word, &temp, &ind, kol);
 
     f = fopen("input.txt", "r");
     fp = fopen("output.txt", "w");
 
-    if (f != NULL) {
-        final_step(f, fp, temp, ind);
-        fclose(f);
-    }
-    else {
-        return 0;
-    }
-    fprintf(fp, "\n/\n");
-    for (int i = 0; i < ind; i++) {
-        fprintf(fp, "%s ", temp[i].val1);
-        fprintf(fp, "%s ", temp[i].val2);
-    }
-    fclose(fp);
+    process_output_file(f, fp, temp, ind);
+
     free(word);
     word = NULL;
     free(temp);
