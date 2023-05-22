@@ -57,7 +57,7 @@ void final_step(FILE* f, FILE* fp, struct imp* temp, int ind)
             c = (char)ch;
             
             char sep[16] = "[](),*.;:!?\"";
-            char* istr = NULL;
+            char* istr;
             if (buff != NULL) {
                 istr = strtok(buff, sep);
             }
