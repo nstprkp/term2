@@ -255,39 +255,55 @@ void median_filter(BMPFile* bmp, RGB_pix* pixels)
     RGB_pix* maskArray = NULL;
     int maskOffsetFromStart = (mask / 2);
 
-    while (offset < arrayLength) {
-        for (int arrayIndex = offset, col = 0; col < bmp->bhdr.width; col++, arrayIndex++) {
-            maskArray = (RGB_pix*) realloc(maskArray, maskSize * sizeof(RGB_pix));
-            int maskStartingRow = 0;
-            int t = offset / bmp->bhdr.width;
-            if ( t - maskOffsetFromStart > maskStartingRow) {
-                maskStartingRow = offset / bmp->bhdr.width - maskOffsetFromStart;
-            }
-            int maskStartingCol = 0;
-            if (col - maskOffsetFromStart > maskStartingCol) {
-                maskStartingCol = col - maskOffsetFromStart;
-            }
+    bool condition1 = true;
+bool condition2 = true;
 
-            int i = 0;
-            for (int maskRow = maskStartingRow, k = 0; k < mask && k < abs(bmp->bhdr.height); k++, maskRow++) {
-                for (int maskCol = maskStartingCol, j = 0; j < mask && j < abs(bmp->bhdr.width); j++, maskCol++) {
-                    long where = maskRow * abs(bmp->bhdr.width) + maskCol;
-                    maskArray[i++] = pixels[where];
-                }
-            }
-            qsort(maskArray, maskSize, sizeof(RGB_pix), comparator);
-            RGB_pix new_value;
-            new_value.r = 0; new_value.g = 0; new_value.b = 0;
-            new_value.r = maskArray[maskSize / 2].r;
-            new_value.g = maskArray[maskSize / 2].g;
-            new_value.b = maskArray[maskSize / 2].b;
-            pixels[arrayIndex].r = new_value.r;
-            pixels[arrayIndex].g = new_value.g;
-            pixels[arrayIndex].b = new_value.b;
-        }
-        sq += 1;
-        offset = abs(bmp->bhdr.width) * sq;
+while (offset < arrayLength && condition1 && condition2) {
+    int maskStartingRow = 0;
+    int t = offset / bmp->bhdr.width;
+    if (t - maskOffsetFromStart > maskStartingRow) {
+        maskStartingRow = offset / bmp->bhdr.width - maskOffsetFromStart;
     }
+
+    int maskStartingCol = 0;
+    if (col - maskOffsetFromStart > maskStartingCol) {
+        maskStartingCol = col - maskOffsetFromStart;
+    }
+
+    int maskRow = maskStartingRow;
+    int maskCol = maskStartingCol;
+    int i = 0;
+    int k = 0;
+    int j = 0;
+
+    for (; k < mask && k < abs(bmp->bhdr.height) && condition1; k++, maskRow++) {
+        for (; j < mask && j < abs(bmp->bhdr.width) && condition2; j++, maskCol++) {
+            long where = maskRow * abs(bmp->bhdr.width) + maskCol;
+            maskArray[i++] = pixels[where];
+        }
+    }
+
+    qsort(maskArray, maskSize, sizeof(RGB_pix), comparator);
+    RGB_pix new_value;
+    new_value.r = 0;
+    new_value.g = 0;
+    new_value.b = 0;
+    new_value.r = maskArray[maskSize / 2].r;
+    new_value.g = maskArray[maskSize / 2].g;
+    new_value.b = maskArray[maskSize / 2].b;
+    pixels[arrayIndex].r = new_value.r;
+    pixels[arrayIndex].g = new_value.g;
+    pixels[arrayIndex].b = new_value.b;
+
+    // Update conditions and variables
+    col++;
+    arrayIndex++;
+    sq += 1;
+    offset = abs(bmp->bhdr.width) * sq;
+    condition1 = (offset < arrayLength);
+    condition2 = (col < bmp->bhdr.width);
+}
+
     for (int j = 0; j < abs(bmp->bhdr.height); j++) {
         for (int i = 0; i < abs(bmp->bhdr.width); i++) {
             set_pixel(bmp, i, j, pixels[j * abs(bmp->bhdr.width) + i]);
