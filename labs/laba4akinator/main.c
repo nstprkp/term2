@@ -36,7 +36,6 @@ int main() {
         if (t == 1) { check = check * 2; }
         else { check = (check * 2) + 1; }
         char *quest;
-        quest = (char *) malloc(256 * sizeof(char));
         quest = get_elem(tree, check);
         ans = get_ans(tree, check);
         if (ans==1) {
