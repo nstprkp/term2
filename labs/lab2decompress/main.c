@@ -50,6 +50,14 @@ struct imp* read_temp_from_file(FILE** stream, char* buff, char* st, int* ind) {
     return temp;
 }
 
+void free_temp(struct imp* temp, int ind) {
+    for (int i = 0; i < ind; i++) {
+        free(temp[i].val1);
+        free(temp[i].val2);
+    }
+    free(temp);
+}
+
 int main() {
     FILE* stream;
     FILE* fp;
