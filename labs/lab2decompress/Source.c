@@ -79,10 +79,6 @@ void process_buffer(FILE* f, FILE* fp, char* buff, char* c, struct imp* temp, in
     free(add);
 }
 
-void print_in_file(FILE* fp, char* val1, char* val2, char* add) {
-    fprintf(fp, "%s[%s]%s", val1, val2, add);
-}
-
 void final_step(FILE* f, FILE* fp, struct imp* temp, int ind) {
     int t = 0;
     char buff[256];
