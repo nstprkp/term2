@@ -22,7 +22,7 @@ unsigned int hash(const char* key, int num_buckets) {
     for (int i = 0; key[i] != '\0'; i++) {
         hash = hash * 31 + key[i];
     }
-    return hash % 3;
+    return hash % num_buckets;
 }
 
 int input_check(const char* str)
@@ -294,7 +294,7 @@ void add_in_file(HashTable* table, FILE* f, char* domen, char* IP)
     }
 }
 
-void find_in_file (HashTable* table, char* domen, char* dop_domen)
+void find_in_file (HashTable* table, char* domen, const char* dop_domen)
 {
     FILE* f;
     f = fopen("input.txt", "r");
