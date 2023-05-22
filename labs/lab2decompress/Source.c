@@ -23,20 +23,6 @@ void print_in_file(FILE* fp, char* val1, const char* val2, const char* add)
     }
 }
 
-void final_step(FILE* f, FILE* fp, struct imp* temp, int ind) {
-    int t = 0;
-    char buff[256];
-    char c = ' ';
-
-    while (!feof(f) && t == 0) {
-        fscanf(f, "%255s", buff);
-        t = check_termination(buff);
-        if (t == 0) {
-            process_buffer(f, fp, buff, &c, temp, ind);
-        }
-    }
-}
-
 int check_termination(char* buff) {
     char st[2] = "/";
     if (strcmp(buff, st) == 0) {
@@ -95,4 +81,18 @@ void process_buffer(FILE* f, FILE* fp, char* buff, char* c, struct imp* temp, in
 
 void print_in_file(FILE* fp, char* val1, char* val2, char* add) {
     fprintf(fp, "%s[%s]%s", val1, val2, add);
+}
+
+void final_step(FILE* f, FILE* fp, struct imp* temp, int ind) {
+    int t = 0;
+    char buff[256];
+    char c = ' ';
+
+    while (!feof(f) && t == 0) {
+        fscanf(f, "%255s", buff);
+        t = check_termination(buff);
+        if (t == 0) {
+            process_buffer(f, fp, buff, &c, temp, ind);
+        }
+    }
 }
