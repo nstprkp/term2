@@ -122,8 +122,31 @@ void print_in_file(FILE* fp, char* val1, const char* val2, const char* add, char
     }
 }
 
-void final_step(FILE* f, FILE* fp, struct imp* temp, int ind)
-{
+void process_word(FILE* fp, struct imp* temp, char* word, char* add, char c, int ind) {
+    int t = 0;
+    for (int i = 0; i < ind && t == 0; i++) {
+        if (strcmp(temp[i].val1, word) == 0) {
+            print_in_file(fp, temp[i].val2, temp[i].val1, add, c);
+            t++;
+        }
+        if (strcmp(word, temp[i].val2) == 0) {
+            print_in_file(fp, temp[i].val1, temp[i].val2, add, c);
+            t++;
+        }
+    }
+    if (t == 0) {
+        fprintf(fp, "%s", add);
+        if (c == '\n') {
+            fprintf(fp, "%c", c);
+        } else {
+            if (c == ' ') {
+                fprintf(fp, "%c", c);
+            }
+        }
+    }
+}
+
+void final_step(FILE* f, FILE* fp, struct imp* temp, int ind) {
     char buff[256];
     while (!feof(f)) {
         fscanf(f, "%255s", buff);
@@ -132,8 +155,8 @@ void final_step(FILE* f, FILE* fp, struct imp* temp, int ind)
         if (add != NULL) {
             add = strcpy(add, buff);
         }
-        int ch; 
-        char c; 
+        int ch;
+        char c;
         ch = fgetc(f);
         c = (char)ch;
 
@@ -141,38 +164,16 @@ void final_step(FILE* f, FILE* fp, struct imp* temp, int ind)
         const char* istr;
         istr = strtok(buff, sep);
 
-        int i = 0;
-        int t = 0;
         if (temp != NULL && istr != NULL) {
-            while (i < ind && t == 0) {
-                if (strcmp(temp[i].val1, istr) == 0) {
-
-                    print_in_file(fp, temp[i].val2, temp[i].val1, add, c);
-                    t++;
-                }
-                if (strcmp(istr, temp[i].val2) == 0) {
-                    print_in_file(fp, temp[i].val1, temp[i].val2, add, c);
-                    t++;
-                }
-                i++;
-            }
-            if (t == 0) {
-                fprintf(fp, "%s", add);
-                if (c == '\n') { fprintf(fp, "%c", c); }
-                else {
-                    if (c == ' ') {
-                        fprintf(fp, "%c", c);
-                    }
-                }
-            }
+            process_word(fp, temp, istr, add, c, ind);
         }
+
         for (int tt = 0; tt < 256; tt++) {
             buff[tt] = 0;
         }
-        istr = NULL;
+
         free(istr);
         istr = NULL;
-        add = NULL;
         free(add);
         add = NULL;
     }
