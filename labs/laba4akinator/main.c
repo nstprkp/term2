@@ -63,9 +63,9 @@ void play_game(tree_node** tree, int* check) {
         printf("%s!\n\n", str_new);
         free(str_new);
         time_t time_now;
-        char time_str[26];
+        char* time_string;
         time_now = time(NULL);
-        char* time_string = ctime_r(&time_now, time_str);
+        time_string = ctime(&time_now);
         time_string[strlen(time_string) - 1] = '!';
         
         str_new_type = (char*)realloc(str_new_type, (strlen(str_new_type) + strlen(time_string) + 4) * sizeof(char));
