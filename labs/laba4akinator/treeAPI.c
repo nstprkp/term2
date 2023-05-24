@@ -152,34 +152,24 @@ int get_ans(tree_node* head, int check)
 
 void new_insert(tree_node** head, char* value, int check)
 {
+    tree_node* tmp = NULL;
+    
     if (*head == NULL) {
-        *head = create_node(value);
+        *head = get_free_node(value, tmp);
         return;
     }
     
-    insert_node(head, value, check);
-}
-
-void traverse_bits(int check, int* mas, int* i)
-{
-    int t = check;
-    
-    while (t != 1) {
-        mas[*i] = t % 2;
-        t = t / 2;
-        (*i)++;
-    }
-    (*i)--;
-}
-
-void insert_node(tree_node** head, char* value, int check)
-{
-    tree_node* tmp = *head;
-    int mas[32];
+    tmp = *head;
+    int mas[32]; // Assuming 'check' can have a maximum value of 32
     int t = check;
     int i = 0;
     
-    traverse_bits(check, mas, &i);
+    while (t != 1) {
+        mas[i] = t % 2;
+        t = t / 2;
+        i++;
+    }
+    i--;
     
     while (tmp && i >= 0 && check != 1) {
         if (mas[i] != 0) {
