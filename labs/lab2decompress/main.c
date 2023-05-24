@@ -42,7 +42,7 @@ void read_temp_entries(FILE* stream, char* buff, struct imp* temp, int* ind) {
     }
 }
 
-struct imp* read_temp_from_file(FILE** stream, char* buff, char* st, int* ind) {
+struct imp* read_temp_from_file(FILE** stream, char* buff, const char* st, int* ind) {
     struct imp* temp;
     temp = (struct imp*)malloc(1 * sizeof(struct imp));
     *stream = fopen("C:\\Users\\Настя\\source\\repos\\labb2\\labb2\\output.txt", "r");
