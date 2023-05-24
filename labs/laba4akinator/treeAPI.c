@@ -100,7 +100,7 @@ char* get_elem(tree_node *head, int check)
 
 int calculateAns(tree_node* tmp, int* mas, int i, int ans)
 {
-    if (tmp && mas[i] != 0) {
+    if (tmp != NULL && mas[i] != 0) {
         if (i > 0) {
             tmp = tmp->right;
             i--;
