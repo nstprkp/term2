@@ -150,65 +150,58 @@ int get_ans(tree_node* head, int check)
     return ans;
 }
 
+
+
+void handle_empty_tree(tree_node** head, char* value)
+{
+    tree_node* tmp = get_free_node(value, NULL);
+    *head = tmp;
+}
+
+void process_bit_right(tree_node** tmp, char* value)
+{
+    if ((*tmp)->right == NULL) {
+        (*tmp)->right = get_free_node(value, (*tmp)->right);
+    }
+    *tmp = (*tmp)->right;
+}
+
+void process_bit_left(tree_node** tmp, char* value)
+{
+    if ((*tmp)->left == NULL) {
+        (*tmp)->left = get_free_node(value, (*tmp)->left);
+    }
+    *tmp = (*tmp)->left;
+}
+
+
 void new_insert(tree_node** head, char* value, int check)
 {
-    tree_node* tmp = NULL;
-    
     if (*head == NULL) {
-        *head = get_free_node(value, tmp);
+        handle_empty_tree(head, value);
         return;
     }
     
-    tmp = *head;
-    int mas[32]; // Assuming 'check' can have a maximum value of 32
-    int t = check;
+    tree_node* tmp = *head;
+    int bits[32];
     int i = 0;
+    int t = check;
     
     while (t != 1) {
-        mas[i] = t % 2;
+        bits[i] = t % 2;
         t = t / 2;
         i++;
     }
     i--;
     
     while (tmp && i >= 0 && check != 1) {
-        if (mas[i] != 0) {
-            if (i > 0) {
-                if (tmp->right == NULL) {
-                    tmp->right = get_free_node(value, tmp->right);
-                }
-                tmp = tmp->right;
-                i--;
-                continue;
-            } else {
-                if (tmp->right != NULL) {
-                    free(tmp->right->data);
-                } else {
-                    tmp->right = get_free_node(value, tmp->right);
-                }
-                tmp->right->data = (char*)malloc(strlen(value) + 1);
-                strcpy(tmp->right->data, value);
-                return;
-            }
+        int bit = bits[i];
+        if (bit != 0) {
+            process_bit_right(&tmp, value);
         } else {
-            if (i > 0) {
-                if (tmp->left == NULL) {
-                    tmp->left = get_free_node(value, tmp->left);
-                }
-                tmp = tmp->left;
-                i--;
-                continue;
-            } else {
-                if (tmp->left != NULL) {
-                    free(tmp->left->data);
-                } else {
-                    tmp->left = get_free_node(value, tmp->left);
-                }
-                tmp->left->data = (char*)malloc(strlen(value) + 1);
-                strcpy(tmp->left->data, value);
-                return;
-            }
+            process_bit_left(&tmp, value);
         }
+        i--;
     }
 }
 
