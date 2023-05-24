@@ -23,7 +23,7 @@ void print_in_file(FILE* fp, char* val1, const char* val2, const char* add)
     }
 }
 
-int check_termination(char* buff) {
+int check_termination(const char* buff) {
     char st[2] = "/";
     if (strcmp(buff, st) == 0) {
         return 1;
