@@ -13,9 +13,9 @@ int input_check_opt()
 int input_check_del(int n)
 {
     int val;
-    while (scanf_s("%d", &val) != 1 || getchar() != '\n' || (val<1 || val>n)) {
+    while (scanf("%d", &val) != 1 || getchar() != '\n' || (val < 1 || val > n)) {
         printf("Wrong! Try again.\n");
-        rewind(stdin);
+        while (getchar() != '\n'); // Clear input buffer
     }
     return val;
 }
