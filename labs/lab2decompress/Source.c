@@ -60,7 +60,7 @@ void process_buffer(FILE* f, FILE* fp, char* buff, char* c, struct imp* temp, in
     int i = 0;
     int z = 0;
 
-    if (temp != NULL && istr != NULL) {
+    if (temp != NULL) {
         while (i < ind && z == 0) {
             if (strcmp(temp[i].val1, istr) == 0) {
                 print_in_file(fp, temp[i].val2, temp[i].val1, add);
