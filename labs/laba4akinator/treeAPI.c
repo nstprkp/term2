@@ -142,10 +142,7 @@ int get_ans(tree_node* head, int check)
 
     i--;
 
-    while (tmp && check != 1) {
-        ans = calculateAns(tmp, mas, i, ans);
-        break;
-    }
+    ans = calculateAns(tmp, mas, i, ans);
 
     return ans;
 }
