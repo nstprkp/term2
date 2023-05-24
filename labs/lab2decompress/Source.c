@@ -53,7 +53,8 @@ void process_buffer(FILE* f, FILE* fp, char* buff, char* c, struct imp* temp, in
     char sep[16] = "[](),*.;:!?\"";
     const char* istr;
     if (buff != NULL) {
-        istr = strtok(buff, sep);
+        char* saveptr;
+        istr = strtok_r(buff, sep, &saveptr);
     }
 
     int i = 0;
