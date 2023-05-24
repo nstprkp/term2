@@ -21,7 +21,7 @@ void process_input_file(struct stack* st1, FILE* stream, int* n, const int* a) {
     }
 }
 
-void process_st1(struct stack* st1, struct stack* st2, struct words** word, int* kol, int* n, int* a, int* cnt) {
+void process_st1(struct stack* st1, struct stack* st2, struct words** word, int* kol, const int* n, int* a, int* cnt) {
     if (st1 != NULL) {
         st1[0].pointer--;
     }
@@ -49,7 +49,7 @@ void process_st1(struct stack* st1, struct stack* st2, struct words** word, int*
     (*a)++;
 }
 
-void process_st2(struct stack* st1, struct stack* st2, struct words** word, int* kol, int* n, int* a, int* cnt) {
+void process_st2(struct stack* st1, struct stack* st2, struct words** word, int* kol, const int* n, const int* a, int* cnt) {
     if (st2 != NULL) {
         st2[0].pointer--;
     }
@@ -88,7 +88,7 @@ void process_words(struct stack* st1, struct stack* st2, struct words** word, in
     }
 }
 
-void process_matching_words(struct words* word1, struct words* word2, struct imp** temp, int* ind) {
+void process_matching_words(const struct words* word1, const struct words* word2, struct imp** temp, int* ind) {
     (*temp)[*ind].val1 = (char*)calloc(word1->len + 1, sizeof(char));
     strcpy((*temp)[*ind].val1, word1->val);
 
