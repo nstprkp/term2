@@ -162,7 +162,9 @@ void final_step(FILE* f, FILE* fp, struct imp* temp, int ind) {
 
         char sep[16] = "[](),*.;:!?\" ";
         const char* istr;
-        istr = strtok(buff, sep);
+        char* saveptr;
+
+        istr = strtok_r(buff, sep, &saveptr);
 
         if (temp != NULL && istr != NULL) {
             process_word(fp, temp, istr, add, c, ind);
