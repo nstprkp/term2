@@ -15,7 +15,7 @@ tree_node* get_free_node(const char* data, const tree_node* parent)
     return new_node;
 }
 
-void insert(tree_node** head, char* value, int check)
+void insert(tree_node** head, const char* value, int check)
 {
     tree_node* tmp = NULL;
     if (*head == NULL) {
@@ -152,13 +152,13 @@ int get_ans(tree_node* head, int check)
 
 
 
-void handle_empty_tree(tree_node** head, char* value)
+void handle_empty_tree(tree_node** head, const char* value)
 {
     tree_node* tmp = get_free_node(value, NULL);
     *head = tmp;
 }
 
-void process_bit_right(tree_node** tmp, char* value)
+void process_bit_right(tree_node** tmp, const char* value)
 {
     if ((*tmp)->right == NULL) {
         (*tmp)->right = get_free_node(value, (*tmp)->right);
@@ -166,7 +166,7 @@ void process_bit_right(tree_node** tmp, char* value)
     *tmp = (*tmp)->right;
 }
 
-void process_bit_left(tree_node** tmp, char* value)
+void process_bit_left(tree_node** tmp, const char* value)
 {
     if ((*tmp)->left == NULL) {
         (*tmp)->left = get_free_node(value, (*tmp)->left);
