@@ -1,23 +1,5 @@
 #include "Header.h"
 
-struct imp* read_temp_from_file(FILE** stream, char* buff, char* st, int* ind) {
-    struct imp* temp;
-    temp = (struct imp*)malloc(1 * sizeof(struct imp));
-    *stream = fopen("C:\\Users\\Настя\\source\\repos\\labb2\\labb2\\output.txt", "r");
-    if (*stream != NULL) {
-        int t = 0;
-        t = check_st_in_stream(*stream, buff, st);
-        if (t == 1) {
-            read_temp_entries(*stream, buff, temp, ind);
-        }
-    } else {
-        free(temp);
-        return NULL;
-    }
-    fclose(*stream);
-    return temp;
-}
-
 int check_st_in_stream(FILE* stream, char* buff, char* st) {
     int t = 0;
     while (!feof(stream) && t == 0) {
@@ -60,6 +42,24 @@ void read_temp_entries(FILE* stream, char* buff, struct imp* temp, int* ind) {
     }
 }
 
+struct imp* read_temp_from_file(FILE** stream, char* buff, char* st, int* ind) {
+    struct imp* temp;
+    temp = (struct imp*)malloc(1 * sizeof(struct imp));
+    *stream = fopen("C:\\Users\\Настя\\source\\repos\\labb2\\labb2\\output.txt", "r");
+    if (*stream != NULL) {
+        int t = 0;
+        t = check_st_in_stream(*stream, buff, st);
+        if (t == 1) {
+            read_temp_entries(*stream, buff, temp, ind);
+        }
+    } else {
+        free(temp);
+        return NULL;
+    }
+    fclose(*stream);
+    return temp;
+}
+
 void free_temp(struct imp* temp, int ind) {
     for (int i = 0; i < ind; i++) {
         free(temp[i].val1);
@@ -89,8 +89,6 @@ int main() {
     if (f != NULL) {
         final_step(f, fp, temp, ind);
     } else {
-        fclose(f);
-        fclose(fp);
         free_temp(temp, ind);
         return 0;
     }
