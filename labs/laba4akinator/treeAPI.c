@@ -175,7 +175,7 @@ void process_bit_left(tree_node** tmp, const char* value)
 }
 
 
-void new_insert(tree_node** head, char* value, int check)
+void new_insert(tree_node** head, const char* value, int check)
 {
     if (*head == NULL) {
         handle_empty_tree(head, value);
