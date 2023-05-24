@@ -13,6 +13,6 @@ tree_node* get_free_node(const char* data, const tree_node* parent);
 void insert(tree_node** head, const char* value, int check);
 char* get_elem(tree_node *head, int check);
 int get_ans(tree_node *head, int check);
-void new_insert(tree_node** head, char* value, int check);
+void new_insert(tree_node** head, const char* value, int check);
 void print_tree(tree_node *root, const char *dir, int level);
 void free_tree(tree_node *tree);
