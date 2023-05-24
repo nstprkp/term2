@@ -27,6 +27,7 @@ void play_game(tree_node** tree, int* check) {
             }
             str_new[j] = '\0';
             printf("\nYour character is %s!\n", str_new);
+            free(str_new);
         } else {
             printf("%s", quest);
         }
@@ -60,6 +61,7 @@ void play_game(tree_node** tree, int* check) {
         }
         str_new_type[j] = '\0';
         printf("%s!\n\n", str_new);
+        free(str_new);
         time_t time_now;
         char* time_string;
         time_now = time(NULL);
