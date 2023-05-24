@@ -76,7 +76,7 @@ void process_st2(struct stack* st1, struct stack* st2, struct words** word, int*
     onTop2 = NULL;
 }
 
-void process_words(struct stack* st1, struct stack* st2, struct words** word, int* kol, int* n, int* a) {
+void process_words(struct stack* st1, struct stack* st2, struct words** word, int* kol, const int* n, int* a) {
     while (st1[0].pointer > 0 || st2[0].pointer > 0) {
         int cnt;
 
@@ -113,7 +113,7 @@ void process_matching_words(const struct words* word1, const struct words* word2
     ptr = NULL;
 }
 
-void process_word_struct(struct words* word, struct imp** temp, int* ind, int kol) {
+void process_word_struct(const struct words* word, struct imp** temp, int* ind, int kol) {
     int s = 0;
     int l = kol - 1;
     if (word != NULL) {
