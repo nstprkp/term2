@@ -1,6 +1,6 @@
 #include "Header.h"
 
-int check_st_in_stream(FILE* stream, char* buff, char* st) {
+int check_st_in_stream(FILE* stream, char* buff, const char* st) {
     int t = 0;
     while (!feof(stream) && t == 0) {
         fscanf(stream, "%255s", buff);
