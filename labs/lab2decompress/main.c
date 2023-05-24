@@ -91,6 +91,7 @@ int main() {
     } else {
         fclose(f);
         fclose(fp);
+        free_temp(temp, ind);
         return 0;
     }
     fclose(f);
