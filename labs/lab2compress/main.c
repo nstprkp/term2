@@ -7,7 +7,9 @@ void process_input_file(struct stack* st1, FILE* stream, int* n, const int* a) {
 
         char sep[16] = ",.;*:!?()[]\" ";
         const char* istr;
-        istr = strtok(buff, sep);
+        char* saveptr;
+
+        istr = strtok_r(buff, sep, &saveptr);
 
         if (st1 != NULL) {
             push(st1, istr, *n, *a);
