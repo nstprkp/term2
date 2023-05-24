@@ -139,6 +139,7 @@ int get_ans(tree_node* head, int check)
         }
     }
     }
+    return ans;
 }
 
 
