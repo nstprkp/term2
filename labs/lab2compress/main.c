@@ -1,6 +1,6 @@
 #include "Header.h"
 
-void process_input_file(struct stack* st1, FILE* stream, int* n, int* a) {
+void process_input_file(struct stack* st1, FILE* stream, int* n, const int* a) {
     char buff[256];
     while (!feof(stream)) {
         fscanf(stream, "%255s", buff);
@@ -17,18 +17,6 @@ void process_input_file(struct stack* st1, FILE* stream, int* n, int* a) {
         free(istr);
         for (int tt = 0; tt < 256; tt++) {
             buff[tt] = 0;
-        }
-    }
-}
-
-void process_words(struct stack* st1, struct stack* st2, struct words** word, int* kol, int* n, int* a) {
-    while (st1[0].pointer > 0 || st2[0].pointer > 0) {
-        int cnt;
-
-        if (st1[0].pointer >= 0) {
-            process_st1(st1, st2, word, kol, n, a, &cnt);
-        } else {
-            process_st2(st1, st2, word, kol, n, a, &cnt);
         }
     }
 }
@@ -88,16 +76,14 @@ void process_st2(struct stack* st1, struct stack* st2, struct words** word, int*
     onTop2 = NULL;
 }
 
+void process_words(struct stack* st1, struct stack* st2, struct words** word, int* kol, int* n, int* a) {
+    while (st1[0].pointer > 0 || st2[0].pointer > 0) {
+        int cnt;
 
-void process_word_struct(struct words* word, struct imp** temp, int* ind, int kol) {
-    int s = 0;
-    int l = kol - 1;
-    if (word != NULL) {
-        while (s != l) {
-            if (word[l].len > word[s].len && word[l].num > word[s].num && word[l].met == 0 && word[s].met == 0) {
-                process_matching_words(&word[l], &word[s], temp, ind);
-            }
-            l--;
+        if (st1[0].pointer >= 0) {
+            process_st1(st1, st2, word, kol, n, a, &cnt);
+        } else {
+            process_st2(st1, st2, word, kol, n, a, &cnt);
         }
     }
 }
@@ -127,6 +113,18 @@ void process_matching_words(struct words* word1, struct words* word2, struct imp
     ptr = NULL;
 }
 
+void process_word_struct(struct words* word, struct imp** temp, int* ind, int kol) {
+    int s = 0;
+    int l = kol - 1;
+    if (word != NULL) {
+        while (s != l) {
+            if (word[l].len > word[s].len && word[l].num > word[s].num && word[l].met == 0 && word[s].met == 0) {
+                process_matching_words(&word[l], &word[s], temp, ind);
+            }
+            l--;
+        }
+    }
+}
 
 void process_output_file(FILE* f, FILE* fp, struct imp* temp, int ind) {
     if (f != NULL) {
@@ -204,8 +202,8 @@ int main() {
 
     process_output_file(f, fp, temp, ind);
 
-    fclose(f);
-    fclose(fp);
+    if (f!=NULL) {fclose(f);}
+    if (fp!=NULL) {fclose(fp);}
     free(word);
     word = NULL;
     free(temp);
