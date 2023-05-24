@@ -56,7 +56,6 @@ struct imp* read_temp_from_file(FILE** stream, char* buff, char* st, int* ind) {
         free(temp);
         return NULL;
     }
-    fclose(*stream);
     return temp;
 }
 
@@ -82,6 +81,7 @@ int main() {
         printf("File not found!\n");
         return 0;
     }
+    fclose(stream);
 
     f = fopen("C:\\Users\\Настя\\source\\repos\\labb2\\labb2\\output.txt", "r");
     fp = fopen("out.txt", "w");
