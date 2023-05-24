@@ -98,33 +98,6 @@ char* get_elem(tree_node *head, int check)
     return str;
 }
 
-int calculateAns(tree_node* tmp, int* mas, int i, int ans)
-{
-    if (tmp != NULL && mas[i] != 0) {
-        if (i > 0) {
-            tmp = tmp->right;
-            i--;
-            return calculateAns(tmp, mas, i, ans);
-        } else {
-            if (tmp->right->right->data == NULL || tmp->right->right == NULL) {
-                ans++;
-            }
-            return ans;
-        }
-    } else {
-        if (i > 0) {
-            tmp = tmp->left;
-            i--;
-            return calculateAns(tmp, mas, i, ans);
-        } else {
-            if (tmp->left->left->data == NULL || tmp->left->left == NULL) {
-                ans++;
-            }
-            return ans;
-        }
-    }
-}
-
 int get_ans(tree_node* head, int check)
 {
     int ans = 0;
@@ -141,9 +114,31 @@ int get_ans(tree_node* head, int check)
     }
     i--;
 
-    ans = calculateAns(tmp, mas, i, ans);
-
-    return ans;
+    while (tmp && check != 1) {
+        if (mas[i] != 0) {
+        if (i > 0) {
+            tmp = tmp->right;
+            i--;
+            continue;
+        } else {
+            if (tmp->right->right->data == NULL || tmp->right->right == NULL) {
+                ans++;
+            }
+            return ans;
+        }
+    } else {
+        if (i > 0) {
+            tmp = tmp->left;
+            i--;
+            continue;
+        } else {
+            if (tmp->left->left->data == NULL || tmp->left->left == NULL) {
+                ans++;
+            }
+            return ans;
+        }
+    }
+    }
 }
 
 
