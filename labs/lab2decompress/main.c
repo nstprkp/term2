@@ -88,12 +88,9 @@ int main() {
 
     if (f != NULL) {
         final_step(f, fp, temp, ind);
-    } else {
-        free_temp(temp, ind);
-        return 0;
-    }
-    fclose(f);
-    fclose(fp);
+    } 
+    if (f!=NULL) {fclose(f);}
+    if (fp!=NULL) {fclose(fp);}
     free_temp(temp, ind);
     printf("check your result!\n");
     return 0;
