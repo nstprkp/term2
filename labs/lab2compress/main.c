@@ -131,7 +131,6 @@ void process_matching_words(struct words* word1, struct words* word2, struct imp
 void process_output_file(FILE* f, FILE* fp, struct imp* temp, int ind) {
     if (f != NULL) {
         final_step(f, fp, temp, ind);
-        fclose(f);
     } else {
         return;
     }
@@ -140,7 +139,6 @@ void process_output_file(FILE* f, FILE* fp, struct imp* temp, int ind) {
         fprintf(fp, "%s ", temp[i].val1);
         fprintf(fp, "%s ", temp[i].val2);
     }
-    fclose(fp);
 }
 
 int main() {
@@ -206,6 +204,8 @@ int main() {
 
     process_output_file(f, fp, temp, ind);
 
+    fclose(f);
+    fclose(fp);
     free(word);
     word = NULL;
     free(temp);
