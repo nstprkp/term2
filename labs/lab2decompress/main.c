@@ -89,6 +89,8 @@ int main() {
     if (f != NULL) {
         final_step(f, fp, temp, ind);
     } else {
+        fclose(f);
+        fclose(fp);
         return 0;
     }
     fclose(f);
