@@ -122,7 +122,7 @@ void print_in_file(FILE* fp, char* val1, const char* val2, const char* add, char
     }
 }
 
-void process_word(FILE* fp, struct imp* temp, char* word, char* add, char c, int ind) {
+void process_word(FILE* fp, struct imp* temp, const char* word, char* add, char c, int ind) {
     int t = 0;
     for (int i = 0; i < ind && t == 0; i++) {
         if (strcmp(temp[i].val1, word) == 0) {
