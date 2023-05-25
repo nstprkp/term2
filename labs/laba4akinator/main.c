@@ -75,6 +75,7 @@ void play_game(tree_node** tree, int* check) {
         str_new_type = strcat(str_new_type, "\n");
 
         new_insert(tree, str_new_type, *check);
+        free(str_new_type);
     } else {
         printf("Oh, sorry!\nAdd special question about your character and try again!\n");
         printf("Enter name of your character:\n");
