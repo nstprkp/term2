@@ -345,7 +345,7 @@ void find_in_file (HashTable* table, const char* domen, const char* dop_domen)
     }
 }
 
-int find_IP(HashTable* table, char* domen)
+int find_IP(HashTable* table, const char* domen)
 {
     int ch = 0;
     char *value = get(table, domen);
