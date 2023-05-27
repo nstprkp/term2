@@ -378,7 +378,7 @@ void domain_by_IP(void)
     char line[n];
     char domain[n];
     char ip[16];
-    while (fgets(line, sizeof(line), fp) != NULL) {
+    while (fgets(line, (int)sizeof(line), fp) != NULL) {
         if ( sscanf(line, "%255s IN A %255s", domain, ip) == 2 && strcmp(needIP, ip) == 0 && count == 0) {
             printf("%s\n", domain);
             count++;
