@@ -326,6 +326,8 @@ void process_input_file(HashTable* table, FILE* file, const char* domen, const c
                 }
                 count = -1;
                 break;
+            default:
+                break;
         }
 
         for (int tt = 0; tt < 256; tt++) {
