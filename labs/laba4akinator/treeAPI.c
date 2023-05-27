@@ -98,7 +98,41 @@ char* get_elem(tree_node *head, int check)
     return str;
 }
 
-int get_ans(tree_node* head, int check)
+int get_ans(tree_node* head, int check) {
+    int ans = 0;
+    tree_node* tmp = head;
+
+    for (int i = check; i > 1; i /= 2) {
+        int bit = i % 2;
+        if (bit != 0) {
+            if (tmp->right != NULL) {
+                tmp = tmp->right;
+            } else {
+                break;
+            }
+        } else {
+            if (tmp->left != NULL) {
+                tmp = tmp->left;
+            } else {
+                break;
+            }
+        }
+    }
+
+    if (tmp != NULL) {
+        if (tmp->right != NULL && tmp->right->right != NULL && tmp->right->right->data == NULL) {
+            ans++;
+        }
+        if (tmp->left != NULL && tmp->left->left != NULL && tmp->left->left->data == NULL) {
+            ans++;
+        }
+    }
+
+    return ans;
+}
+
+
+/*int get_ans(tree_node* head, int check)
 {
     int ans = 0;
     tree_node* tmp = NULL;
@@ -141,7 +175,7 @@ int get_ans(tree_node* head, int check)
     }
     return ans;
 }
-
+*/
 
 
 void handle_empty_tree(tree_node** head, const char* value)
