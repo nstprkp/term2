@@ -52,11 +52,11 @@ void process_buffer(FILE* f, FILE* fp, char* buff, char* c, struct imp* temp, in
 
     char sep[16] = "[](),*.;:!?\"";
     char* istr = (char*)calloc(256, sizeof(char));
-    if (buff != NULL) {
+  //  if (buff != NULL) {
         char* saveptr;
         istr = strtok_r(buff, sep, &saveptr);
-    }
-    istr = (char*)realloc(istr, strlen(istr)*sizeof(char));
+ //   }
+//    istr = (char*)realloc(istr, strlen(istr)*sizeof(char));
     int i = 0;
     int z = 0;
 
