@@ -111,19 +111,6 @@ int get_ans(tree_node* head, int check) {
         else {
             tmp = tmp->left;
         }
-      /*  if (bit != 0) {
-            if (tmp->right != NULL) {
-                tmp = tmp->right;
-            } else {
-                break;
-            }
-        } else {
-            if (tmp->left != NULL) {
-                tmp = tmp->left;
-            } else {
-                break;
-            }
-        }*/
     }
 
     if (tmp != NULL) {
