@@ -315,11 +315,9 @@ void process_input_file(HashTable* table, FILE* file, const char* domen, const c
             case 3:
                 vv = (char*)malloc(strlen(buff) * sizeof(char));
                 strcpy(vv, buff);
-                if (strcmp(kk, domen) == 0 && ch == 0) {
-                    if (move_to_head_in_cash(table, dop_domen, vv) == 0) {
-                        putt(table, dop_domen, vv);
-                        full_cash(table);
-                    }
+                if (strcmp(kk, domen) == 0 && ch == 0 && move_to_head_in_cash(table, dop_domen, vv) == 0) {
+                    putt(table, dop_domen, vv);
+                    full_cash(table);
                 }
                 if (strcmp(kk, domen) == 0 && ch == 1) {
                     ch = 2;
