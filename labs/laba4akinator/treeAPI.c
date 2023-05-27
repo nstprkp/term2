@@ -80,7 +80,7 @@ char* get_elem(tree_node *head, int check)
                 i--;
                 continue;
             } else {
-                
+                free(str);
                 return tmp->right->data;
             }
         }
@@ -90,7 +90,7 @@ char* get_elem(tree_node *head, int check)
                 i--;
                 continue;
             } else {
-                
+                free(str);
                 return tmp->left->data;
             }
         }
