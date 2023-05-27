@@ -294,8 +294,7 @@ void add_in_file(HashTable* table, FILE* f, char* domen, char* IP)
     }
 }
 
-void find_in_file(HashTable* table, const char* domen, const char* dop_domen) {
-    FILE* f = fopen("input.txt", "r");
+void process_input_file(HashTable* table, FILE* file, const char* domen, const char* dop_domen) {
     char buff[256];
     int count = 0;
     char* kk = NULL;
@@ -303,9 +302,7 @@ void find_in_file(HashTable* table, const char* domen, const char* dop_domen) {
     int check = 0;
     int ch = 0;
 
-    do {
-        fscanf(f, "%255s", buff);
-
+    while (fscanf(file, "%255s", buff) != EOF) {
         switch (count) {
             case 0:
                 kk = (char*)malloc((strlen(buff) + 2) * sizeof(char));
@@ -330,9 +327,6 @@ void find_in_file(HashTable* table, const char* domen, const char* dop_domen) {
                     ch = 2;
                     check = 1;
                 }
-                if (ch != 0) {
-                    ch--;
-                }
                 count = -1;  // Reset count to 0 in next iteration
                 break;
         }
@@ -342,10 +336,6 @@ void find_in_file(HashTable* table, const char* domen, const char* dop_domen) {
         }
 
         count++;
-    } while (f != NULL && !feof(f) && check == 0);
-
-    if (f != NULL) {
-        fclose(f);
     }
 
     if (ch == 1) {
@@ -356,6 +346,16 @@ void find_in_file(HashTable* table, const char* domen, const char* dop_domen) {
     free(vv);
 }
 
+void find_in_file(HashTable* table, const char* domen, const char* dop_domen) {
+    FILE* f = fopen("input.txt", "r");
+    if (f == NULL) {
+        return;
+    }
+
+    process_input_file(table, f, domen, dop_domen);
+
+    fclose(f);
+}
 
 /*void find_in_file (HashTable* table, const char* domen, const char* dop_domen)
 {
