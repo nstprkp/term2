@@ -294,7 +294,7 @@ void add_in_file(HashTable* table, FILE* f, char* domen, char* IP)
     }
 }
 
-void find_in_file (HashTable* table, char* domen, const char* dop_domen)
+void find_in_file (HashTable* table, const char* domen, const char* dop_domen)
 {
     FILE* f;
     f = fopen("input.txt", "r");
