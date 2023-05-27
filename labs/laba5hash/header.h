@@ -29,7 +29,7 @@ void putt(HashTable* table, const char* key, const char* value);
 void full_cash(HashTable* table);
 char* get(HashTable* table, const char* key);
 void add_in_file(HashTable* table, FILE* f, char* domen, char* IP);
-void find_in_file (HashTable* table, char* domen, const char* dop_domen);
+void find_in_file (HashTable* table, const char* domen, const char* dop_domen);
 int find_IP(HashTable* table, char* domen);
 void domain_by_IP(void);
 void display_hash_table(const struct HashTable* hashtable);
