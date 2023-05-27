@@ -62,17 +62,13 @@ void play_game(tree_node** tree, int* check) {
         str_new_type[j] = '\0';
         printf("%s!\n\n", str_new);
         free(str_new);
-        time_t time_now;
-        struct tm result;
-        char time_string[80];
-        time(&time_now);
-        localtime_r(&time_now, &result);
-        strftime(time_string, sizeof(time_string), "%c", &result);
         
-       /* time_t time_now;
+        struct tm result;
+        
+        time_t time_now;
         char time_string[80];
         time(&time_now);
-        strftime(time_string, sizeof(time_string), "%c", localtime(&time_now));*/
+        strftime(time_string, sizeof(time_string), "%c", localtime_r(&time_now, &result));
         
         
      /*   time_t time_now;
