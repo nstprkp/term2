@@ -124,7 +124,8 @@ void print_in_file(FILE* fp, char* val1, const char* val2, const char* add, char
 
 void process_word(FILE* fp, struct imp* temp, const char* word, char* add, char c, int ind) {
     int t = 0;
-    for (int i = 0; i < ind && t == 0; i++) {
+    int i = 0;
+    while (i < ind && t == 0) {
         if (strcmp(temp[i].val1, word) == 0) {
             print_in_file(fp, temp[i].val2, temp[i].val1, add, c);
             t++;
@@ -133,6 +134,7 @@ void process_word(FILE* fp, struct imp* temp, const char* word, char* add, char 
             print_in_file(fp, temp[i].val1, temp[i].val2, add, c);
             t++;
         }
+        i++;
     }
     if (t == 0) {
         fprintf(fp, "%s", add);
