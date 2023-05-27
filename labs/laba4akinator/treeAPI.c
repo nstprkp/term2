@@ -72,7 +72,7 @@ char* get_elem(tree_node *head, int check)
         i++;
     }
     i--;
-    char str[256] = "asdfghjkl";
+    char* str = (char*)calloc(256, sizeof(char));
     while (tmp && check != 1) {
         if (mas[i] != 0) {
             if (i>0) {
