@@ -51,7 +51,7 @@ void process_buffer(FILE* f, FILE* fp, char* buff, char* c, struct imp* temp, in
     *c = (char)ch;
 
     char sep[16] = "[](),*.;:!?\"";
-    const char* istr;
+    char* istr = (char*)calloc(256, sizeof(char));
     if (buff != NULL) {
         char* saveptr;
         istr = strtok_r(buff, sep, &saveptr);
