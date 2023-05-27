@@ -294,7 +294,70 @@ void add_in_file(HashTable* table, FILE* f, char* domen, char* IP)
     }
 }
 
-void find_in_file (HashTable* table, const char* domen, const char* dop_domen)
+void find_in_file(HashTable* table, const char* domen, const char* dop_domen) {
+    FILE* f = fopen("input.txt", "r");
+    char buff[256];
+    int count = 0;
+    char* kk = NULL;
+    char* vv = NULL;
+    int check = 0;
+    int ch = 0;
+
+    do {
+        fscanf(f, "%255s", buff);
+
+        switch (count) {
+            case 0:
+                kk = (char*)malloc((strlen(buff) + 2) * sizeof(char));
+                strcpy(kk, buff);
+                break;
+            case 2:
+                if (strcmp(buff, "CNAME") == 0) {
+                    ch = 1;
+                }
+                break;
+            case 3:
+                vv = (char*)malloc(strlen(buff) * sizeof(char));
+                strcpy(vv, buff);
+                if (strcmp(kk, domen) == 0 && ch == 0) {
+                    if (move_to_head_in_cash(table, dop_domen, vv) == 0) {
+                        putt(table, dop_domen, vv);
+                        full_cash(table);
+                    }
+                    check = 1;
+                }
+                if (strcmp(kk, domen) == 0 && ch == 1) {
+                    ch = 2;
+                    check = 1;
+                }
+                if (ch != 0) {
+                    ch--;
+                }
+                count = -1;  // Reset count to 0 in next iteration
+                break;
+        }
+
+        for (int tt = 0; tt < 256; tt++) {
+            buff[tt] = 0;
+        }
+
+        count++;
+    } while (f != NULL && !feof(f) && check == 0);
+
+    if (f != NULL) {
+        fclose(f);
+    }
+
+    if (ch == 1) {
+        find_in_file(table, vv, domen);
+    }
+
+    free(kk);
+    free(vv);
+}
+
+
+/*void find_in_file (HashTable* table, const char* domen, const char* dop_domen)
 {
     FILE* f;
     f = fopen("input.txt", "r");
@@ -343,7 +406,7 @@ void find_in_file (HashTable* table, const char* domen, const char* dop_domen)
     if (ch == 1) {
         find_in_file(table, vv, domen);
     }
-}
+}*/
 
 int find_IP(HashTable* table, const char* domen)
 {
