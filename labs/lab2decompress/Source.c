@@ -76,7 +76,7 @@ void process_buffer(FILE* f, FILE* fp, char* buff, char* c, struct imp* temp, in
             fprintf(fp, "%s", add);
         }
     }
-
+    free(istr);
     free(add);
 }
 
