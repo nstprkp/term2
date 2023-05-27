@@ -57,7 +57,6 @@ void process_buffer(FILE* f, FILE* fp, char* buff, char* c, struct imp* temp, in
         istr = strtok_r(buff, sep, &saveptr);
     }
     istr = (char*)realloc(istr, strlen(istr)*sizeof(char));
-    free(istr);
     int i = 0;
     int z = 0;
 
