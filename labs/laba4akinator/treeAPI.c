@@ -104,7 +104,14 @@ int get_ans(tree_node* head, int check) {
 
     for (int i = check; i > 1; i /= 2) {
         int bit = i % 2;
+        if (tmp->right == NULL || tmp->left == NULL) { break;}
         if (bit != 0) {
+            tmp = tmp->right;
+        }
+        else {
+            tmp = tmp->left;
+        }
+      /*  if (bit != 0) {
             if (tmp->right != NULL) {
                 tmp = tmp->right;
             } else {
@@ -116,7 +123,7 @@ int get_ans(tree_node* head, int check) {
             } else {
                 break;
             }
-        }
+        }*/
     }
 
     if (tmp != NULL) {
